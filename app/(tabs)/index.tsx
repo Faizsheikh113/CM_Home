@@ -1,74 +1,111 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import React from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Text,
+} from "react-native";
+import Header from "@/components/ReusableComponent/CustomHeader";
+import CustomSearchBar from "@/components/ReusableComponent/CustomSearchBar";
+import CustomCarousel from "@/components/ReusableComponent/CustomCrousal";
+import QuizCard from "@/components/ReusableComponent/CustomQuizForTheDay";
+import ManKiBaatVideoSection from "@/components/ReusableComponent/CustomManKiBatVideo";
+import QuickServices from "@/components/ReusableComponent/CustomQuickService";
+import { useQuizOfTheDay } from "@/components/CustomHook/QuizOfTheDayHook";
+import { useManKiBaat } from "@/components/CustomHook/ManKiBatHook";
+import { SectionHeader } from "@/components/ReusableComponent/CustomReusableSchema";
 
 export default function HomeScreen() {
+  const quizOfTheDay = useQuizOfTheDay();
+  const manKiBaatVideos = useManKiBaat();
+  const onExplorePress = () => {
+    console.log("Explor more");
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+    <ScrollView style={styles.container}>
+      {/* Header */}
+      <Header
+        buttonLabel="Man ki Baat"
+        profileImageUrl="https://via.placeholder.com/40x40"
+        languageText="HI | अ"
+        onButtonPress={() => alert("Man ki Baat pressed!")}
+        onProfilePress={() => alert("Profile pressed!")}
+      />
+      {/* Search Bar */}
+      <CustomSearchBar
+        placeholder="Search for 'NEAR BY HEALTH CENTER'"
+        onSearch={(text) => console.log("Search Text:", text)}
+      />
+      {/* Location and Change Button Section */}
+      <View style={styles.locationContainer}>
+        <Text style={styles.locationText}>
+          Anand Vihar, Street 4, Delhi (492001)
+        </Text>
+        <TouchableOpacity onPress={() => alert("Change button pressed!")}>
+          <Text style={styles.changeText}>Change</Text>
+        </TouchableOpacity>
+      </View>
+      {/* Carousel */}
+      <CustomCarousel />
+      {/* 🚀 Quick Services */}
+      <SectionHeader
+        title="🚀 Quick Services"
+        onExplorePress={onExplorePress}
+      />
+      {/* Quick Services */}
+      <QuickServices />
+      {/* Quiz of the Day */}
+      <SectionHeader
+        title="🚀 Quizes For You"
+        onExplorePress={onExplorePress}
+      />
+      {quizOfTheDay && (
+        <QuizCard
+          title={quizOfTheDay.title}
+          lastDate={quizOfTheDay.lastDate}
+          questionCount={quizOfTheDay.questionCount}
+          duration={quizOfTheDay.duration}
+          thumbnail={quizOfTheDay.thumbnail}
+          onParticipate={() =>
+            alert(`Participating in quiz: ${quizOfTheDay.title}`)
+          }
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      )}
+      {/* Man ki Baat Video Section */}
+      {manKiBaatVideos.length > 0 && (
+        <ManKiBaatVideoSection
+          title={manKiBaatVideos[0].title}
+          thumbnail={manKiBaatVideos[0].thumbnail}
+          onPressViewAll={() => alert("Viewing all Man ki Baat videos")}
+        />
+      )}
+    </ScrollView>
   );
 }
 
+// Stylesheet
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
+    backgroundColor: "white",
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  locationContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 8,
+    paddingHorizontal: 20,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  locationText: {
+    fontSize: 14,
+    color: "#888",
+    paddingHorizontal: 5,
+  },
+  changeText: {
+    fontSize: 14,
+    color: "#FFA726",
+    fontWeight: "bold",
   },
 });

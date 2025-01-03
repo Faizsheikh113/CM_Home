@@ -1,43 +1,69 @@
-// This file is a fallback for using MaterialIcons on Android and web.
-
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { SymbolWeight } from 'expo-symbols';
-import React from 'react';
-import { OpaqueColorValue, StyleProp, ViewStyle } from 'react-native';
-
-// Add your SFSymbol to MaterialIcons mappings here.
-const MAPPING = {
-  // See MaterialIcons here: https://icons.expo.fyi
-  // See SF Symbols in the SF Symbols app on Mac.
-  'house.fill': 'home',
-  'paperplane.fill': 'send',
-  'chevron.left.forwardslash.chevron.right': 'code',
-  'chevron.right': 'chevron-right',
-} as Partial<
-  Record<
-    import('expo-symbols').SymbolViewProps['name'],
-    React.ComponentProps<typeof MaterialIcons>['name']
-  >
->;
-
-export type IconSymbolName = keyof typeof MAPPING;
+import React from "react";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { OpaqueColorValue, StyleProp, ViewStyle } from "react-native";
+import { SymbolWeight } from "expo-symbols";
 
 /**
- * An icon component that uses native SFSymbols on iOS, and MaterialIcons on Android and web. This ensures a consistent look across platforms, and optimal resource usage.
+ * Mapping of SFSymbol names to MaterialIcons names for cross-platform consistency.
+ * - See MaterialIcons: https://icons.expo.fyi
+ * - See SF Symbols: SF Symbols app on Mac.
+ */
+const ICON_MAPPING = {
+  "house.fill": "home",
+  "paperplane.fill": "send",
+  // Uncomment and add more mappings as needed:
+  "newspaper.fill": "newspaper",
+  "article.fill": "article",
+  "account-box.fill": "account-box",
+  "contact-support.fill": "contact-support",
+  "chevron.left.forwardslash.chevron.right": "code",
+  "chevron.right": "chevron-right",
+} as const;
+
+export type IconSymbolName = keyof typeof ICON_MAPPING;
+
+/**
+ * Props for the `IconSymbol` component.
+ */
+interface IconSymbolProps {
+  name: IconSymbolName;
+  size?: number;
+  color: string | OpaqueColorValue;
+  style?: StyleProp<ViewStyle>;
+  weight?: SymbolWeight; // Optional for future extension if iOS-specific weights are added
+}
+
+/**
+ * `IconSymbol` component for rendering icons using native SFSymbols on iOS,
+ * and MaterialIcons on Android and web. Ensures consistency across platforms.
  *
- * Icon `name`s are based on SFSymbols and require manual mapping to MaterialIcons.
+ * @param name - Name of the icon (based on SFSymbols).
+ * @param size - Size of the icon (default is 24).
+ * @param color - Color of the icon.
+ * @param style - Additional styles for the icon.
+ * @param weight - Optional weight for the symbol (iOS-specific feature).
  */
 export function IconSymbol({
   name,
   size = 24,
   color,
   style,
-}: {
-  name: IconSymbolName;
-  size?: number;
-  color: string | OpaqueColorValue;
-  style?: StyleProp<ViewStyle>;
-  weight?: SymbolWeight;
-}) {
-  return <MaterialIcons color={color} size={size} name={MAPPING[name]} style={style} />;
+  weight,
+}: IconSymbolProps) {
+  const iconName = ICON_MAPPING[name];
+
+  if (!iconName) {
+    console.error(`Icon name "${name}" is not mapped to a MaterialIcon.`);
+    return null;
+  }
+
+  return (
+    <MaterialIcons
+      name={iconName}
+      size={size}
+      color={color}
+      style={style}
+    />
+  );
 }
