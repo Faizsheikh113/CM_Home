@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Hum_App",
-    "slug": "Hum_App",
+    "slug": "humapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -43,8 +43,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "bb7fb769-d26b-48b0-9417-9e3b0cfc483b"
+        "projectId": "fe0c3847-a4fa-46ca-a76c-cfea02ebf6f0"
       }
-    }
+    },
+    "owner": "faizsheikh"
   }
 }

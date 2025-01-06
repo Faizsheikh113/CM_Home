@@ -16,11 +16,9 @@ import RowListButtonReusable, {
   SectionHeader,
 } from "@/components/ReusableComponent/CustomReusableSchema";
 import LocalImage from "../../assets/images/ScheamPageImage.png";
-import { useNavigation } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
+import CustomBackButton from "@/components/ReusableComponent/CustomBackButton";
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
   const [activeTab, setActiveTab] = useState("Near By");
 
   const categories = [
@@ -67,6 +65,17 @@ const HomeScreen = () => {
   const handleFabPress = () => {
     console.log("FAB clicked!");
   };
+  const handleBackPress = () => {
+    console.log("Back button pressed");
+  };
+
+  const handleSharePress = () => {
+    console.log("Share button pressed");
+  };
+
+  const handleSavePress = () => {
+    console.log("Save button pressed");
+  };
 
   const CustomListNews = ({
     icon,
@@ -107,15 +116,16 @@ const HomeScreen = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView>
         {/* Header */}
-        <Header
-          buttonLabel="Man ki Baat"
-          profileImageUrl="https://via.placeholder.com/40x40"
-          languageText="HI | अ"
-          onButtonPress={() => alert("Man ki Baat pressed!")}
-          onProfilePress={() => alert("Profile pressed!")}
+        <CustomBackButton
+          title="News Detail"
+          showShare={true}
+          showSave={true}
+          onBackPress={handleBackPress}
+          onSharePress={handleSharePress}
+          onSavePress={handleSavePress}
         />
 
         {/* Search Bar */}
@@ -152,7 +162,7 @@ const HomeScreen = () => {
               icon={item.icon}
               title={item.schemeTitle}
               subtitle={item.schemeDetails}
-              onPress={() => navigation.navigate("NewsDetail")}
+              onPress={() => console.log(`${item.schemeTitle} pressed`)}
             />
           )}
           customStyles={{
@@ -164,14 +174,14 @@ const HomeScreen = () => {
         {/* Floating Action Button */}
       </ScrollView>
       <FabButton onPress={handleFabPress} />
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: "#f8f8f8",
   },
   sectionHeaderContainer: {
     marginVertical: "2%",

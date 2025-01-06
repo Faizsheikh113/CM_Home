@@ -1,5 +1,15 @@
+import { LinearGradient } from "expo-linear-gradient";
+// import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  StatusBar,
+  Platform,
+} from "react-native";
 
 interface HeaderProps {
   buttonLabel: string;
@@ -17,45 +27,57 @@ const Header: React.FC<HeaderProps> = ({
   onProfilePress,
 }) => {
   return (
-    <View style={styles.headerContainer}>
-      {/* Logo */}
-      <Image
-        source={require("../../assets/images/Emblem_of_Madhya_Pradesh.png")}
-        style={styles.logo}
-      />
+    <LinearGradient
+      colors={["#F9FAA9", "#FFF5E7", "#F6F6F6",]} // Light gradient colors
+      start={{ x: 1, y: 0 }} // Start from the top-left
+      end={{ x: 1, y: 1 }} // End at the top-right
+      style={styles.container}
+    >
+      <View style={styles.headerContainer}>
+        {/* Logo */}
+        <Image
+          source={require("../../assets/images/Emblem_of_Madhya_Pradesh.png")}
+          style={styles.logo}
+        />
 
-      {/* Button */}
-      <TouchableOpacity style={styles.button} onPress={onButtonPress}>
-        <Text style={styles.buttonText}>{buttonLabel}</Text>
-      </TouchableOpacity>
+        {/* Button */}
+        <TouchableOpacity style={styles.button} onPress={onButtonPress}>
+          <Text style={styles.buttonText}>{buttonLabel}</Text>
+        </TouchableOpacity>
 
-      {/* Language and Profile */}
-      <View style={styles.languageProfileContainer}>
-        <TouchableOpacity  onPress={onButtonPress}>
-          <Image
-            source={require("../../assets/images/translate-hindi.png")}
-            style={styles.Translate_Logo}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onProfilePress}>
-          <Image
-            source={{ uri: profileImageUrl }}
-            style={styles.profileImage}
-          />
-        </TouchableOpacity>
+        {/* Language and Profile */}
+        <View style={styles.languageProfileContainer}>
+          <TouchableOpacity onPress={onButtonPress}>
+            <Image
+              source={require("../../assets/images/translate-hindi.png")}
+              style={styles.Translate_Logo}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onProfilePress}>
+            <Image
+              source={{ uri: profileImageUrl }}
+              style={styles.profileImage}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    height: 100, // Adjust this value to make the gradient extend further down
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
   headerContainer: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     padding: 15,
-    marginTop: 15,
+    // paddingTop: 25,
+    // marginTop: 15,
   },
   logo: {
     width: 53,

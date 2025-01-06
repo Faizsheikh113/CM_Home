@@ -43,21 +43,22 @@ const HorizontalTabBar: React.FC<HorizontalTabBarProps> = ({
 
 const styles = StyleSheet.create({
   container: {
+    // flex: 1,
     paddingHorizontal: 10,
   },
   tab: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
     borderColor: "#B89449",
     borderWidth: 1,
-    borderRadius: 20,
+    borderRadius: 10,
     marginHorizontal: 5,
   },
   activeTab: {
     backgroundColor: "#B89449", // Active tab color
   },
   tabText: {
-    fontSize: 16,
+    fontSize: 14,
     color: "#333",
     fontWeight: "600",
   },
