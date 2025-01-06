@@ -5,7 +5,10 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 type SectionHeaderProps = {
   title: string;
@@ -84,7 +87,7 @@ const RowListButtonReusable = ({
       {/* FlatList with custom ListItem */}
       <FlatList
         data={listData}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem} // Use the custom renderItem passed from the parent
       />
     </View>
@@ -95,23 +98,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f8f8f8",
-    padding: 16,
-    borderRadius: 20,
+    paddingHorizontal: screenWidth * 0.04, // Dynamic horizontal padding based on screen width
+    paddingVertical: screenHeight * 0.02, // Dynamic vertical padding based on screen height
+    borderRadius: screenWidth * 0.05, // Dynamic border radius based on screen width
   },
   sectionHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 6,
-    paddingHorizontal: 20,
+    marginBottom: screenHeight * 0.015, // Adjust margin bottom based on screen height
+    paddingHorizontal: screenWidth * 0.05, // Dynamic horizontal padding for header
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: screenWidth * 0.045, // Dynamic font size based on screen width
     fontWeight: "600",
     color: "#333",
   },
   exploreText: {
-    fontSize: 14,
+    fontSize: screenWidth * 0.04, // Dynamic font size for explore text
     color: "#B89449",
     fontWeight: "600",
   },

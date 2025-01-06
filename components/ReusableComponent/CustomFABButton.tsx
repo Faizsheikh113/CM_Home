@@ -1,5 +1,7 @@
 import React from "react";
-import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Image, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+
+const { width, height } = Dimensions.get("window");
 
 const FabButton = ({ onPress }: { onPress?: () => void }) => {
   const handlePress = () => {
@@ -11,32 +13,36 @@ const FabButton = ({ onPress }: { onPress?: () => void }) => {
   };
 
   return (
-    // <View style={styles.container}>
     <TouchableOpacity style={styles.floatingButton} onPress={handlePress}>
-      <Image source={require("../../assets/images/sos.png")} style={styles.fabImage} />
+      <Image
+        source={require("../../assets/images/sos.png")}
+        style={styles.fabImage}
+        resizeMode="contain"
+      />
     </TouchableOpacity>
-    // </View>
   );
 };
 
 const styles = StyleSheet.create({
   floatingButton: {
-    flex: 1,
     position: "absolute",
     backgroundColor: "#F9453D",
-    tintColor: "white",
-    right: 20,
-    bottom: 20, // Keep it near the bottom of the screen
-    borderRadius: 30,
-    width: 60,
-    height: 60,
+    right: width * 0.05, // 5% from the right edge
+    bottom: height * 0.05, // 5% from the bottom edge
+    borderRadius: width * 0.15, // Ensure the button stays circular
+    width: width * 0.15, // Dynamic width
+    height: width * 0.15, // Dynamic height to maintain a square
     justifyContent: "center",
     alignItems: "center",
-    elevation: 5, // Adds shadow on Android
-    shadowColor: "#000", // Shadow on iOS
+    elevation: 5, // Shadow for Android
+    shadowColor: "#000", // Shadow for iOS
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
+  },
+  fabImage: {
+    width: "60%", // Image size relative to the button
+    height: "60%",
   },
 });
 

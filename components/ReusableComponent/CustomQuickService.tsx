@@ -46,12 +46,6 @@ const QuickServices: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.header}>
-        <Text style={styles.title}>🚀 Quick Services</Text>
-        <TouchableOpacity>
-          <Text style={styles.explore}>Explore all</Text>
-        </TouchableOpacity>
-      </View> */}
       <FlatList
         data={quickServices}
         renderItem={renderQuickServiceItem}
@@ -66,58 +60,42 @@ const QuickServices: React.FC = () => {
 
 export default QuickServices;
 
-// Stylesheet
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  explore: {
-    fontSize: 14,
-    color: "#007BFF",
+    paddingHorizontal: screenWidth * 0.04, // Dynamic padding
+    paddingVertical: screenWidth * 0.02,
   },
   serviceRow: {
     justifyContent: "space-between",
+    marginBottom: screenWidth * 0.03, // Dynamic spacing between rows
   },
   serviceItem: {
     backgroundColor: "#FFF",
-    borderRadius: 12,
-    padding: 15,
+    borderRadius: screenWidth * 0.03, // Dynamic border radius
+    padding: screenWidth * 0.04, // Dynamic padding
     alignItems: "center",
-    marginBottom: 15,
-    width: screenWidth * 0.42,
+    width: screenWidth * 0.42, // Adjusted width for better responsiveness
     shadowColor: "#000",
-    shadowOffset: { width: 5, height: 5 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 5,
+    elevation: 5, // Android shadow
   },
   serviceIcon: {
-    width: 50,
-    height: 50,
-    marginBottom: 10,
+    width: screenWidth * 0.15, // Dynamic size for icons
+    height: screenWidth * 0.15,
+    marginBottom: screenWidth * 0.02, // Dynamic margin
     resizeMode: "contain",
   },
   serviceName: {
-    fontSize: 16,
+    fontSize: screenWidth * 0.045, // Dynamic font size
     fontWeight: "bold",
     color: "#333",
   },
   serviceDescription: {
-    fontSize: 12,
+    fontSize: screenWidth * 0.035, // Dynamic font size for description
     color: "#666",
     textAlign: "center",
-    marginTop: 5,
+    marginTop: screenWidth * 0.02, // Dynamic margin
   },
 });

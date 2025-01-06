@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   View,
   Text,
+  Dimensions,
+  Platform,
 } from "react-native";
 import Header from "@/components/ReusableComponent/CustomHeader";
 import CustomSearchBar from "@/components/ReusableComponent/CustomSearchBar";
@@ -17,16 +19,18 @@ import { useManKiBaat } from "@/components/CustomHook/ManKiBatHook";
 import { SectionHeader } from "@/components/ReusableComponent/CustomReusableSchema";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+const { width } = Dimensions.get("window");
+
 export default function HomeScreen() {
   const quizOfTheDay = useQuizOfTheDay();
   const manKiBaatVideos = useManKiBaat();
   const onExplorePress = () => {
-    console.log("Explor more");
+    console.log("Explore more");
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollView}>
         {/* Header */}
         <Header
           buttonLabel="Man ki Baat"
@@ -52,17 +56,11 @@ export default function HomeScreen() {
         {/* Carousel */}
         <CustomCarousel />
         {/* 🚀 Quick Services */}
-        <SectionHeader
-          title="🚀 Quick Services"
-          onExplorePress={onExplorePress}
-        />
+        <SectionHeader title="🚀 Quick Services" onExplorePress={onExplorePress} />
         {/* Quick Services */}
         <QuickServices />
         {/* Quiz of the Day */}
-        <SectionHeader
-          title="🚀 Quizes For You"
-          onExplorePress={onExplorePress}
-        />
+        <SectionHeader title="🚀 Quizzes For You" onExplorePress={onExplorePress} />
         {quizOfTheDay && (
           <QuizCard
             title={quizOfTheDay.title}
@@ -93,21 +91,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F6F6F6",
+    paddingTop: Platform.OS === "android" ? 0 : 0,
+  },
+  scrollView: {
+    paddingBottom: width * 0.05, // Add padding at the bottom to account for FAB
   },
   locationContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 8,
-    paddingHorizontal: 20,
+    marginTop: width * 0.02, // Adjust margin top based on width
+    paddingHorizontal: width * 0.05, // 5% of screen width for padding
   },
   locationText: {
-    fontSize: 14,
+    fontSize: width * 0.035, // Responsive font size
     color: "#888",
-    paddingHorizontal: 5,
   },
   changeText: {
-    fontSize: 14,
+    fontSize: width * 0.035, // Responsive font size
     color: "#FFA726",
     fontWeight: "bold",
   },

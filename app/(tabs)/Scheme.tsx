@@ -30,24 +30,16 @@ import LocalImage from "../../assets/images/ScheamPageImage.png";
 import HorizontalTabBar from "@/components/ReusableComponent/customHorizontalBar";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
+
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState("Categories");
 
   const data = [
-    {
-      id: "1",
-      image: "https://via.placeholder.com/350x150", // Replace with actual image URLs
-    },
-    {
-      id: "2",
-      image: "https://via.placeholder.com/350x150",
-    },
-    {
-      id: "3",
-      image: "https://via.placeholder.com/350x150",
-    },
+    { id: "1", image: "https://via.placeholder.com/350x150" },
+    { id: "2", image: "https://via.placeholder.com/350x150" },
+    { id: "3", image: "https://via.placeholder.com/350x150" },
   ];
 
   const categories = ["Categories", "State", "Central Ministeries"];
@@ -79,12 +71,6 @@ export default function HomeScreen() {
     subtitle: string;
     onPress: () => void;
   }) => {
-    // Determine the source of the image
-    // const imageSource =
-    //   typeof icon === "string" && icon.startsWith("http")
-    //     ? { uri: icon } // Remote URL
-    //     : icon; // Local image
-
     return (
       <TouchableOpacity style={styles.listItem} onPress={onPress}>
         <Image source={imageUri} style={styles.listIcon} />
@@ -111,10 +97,6 @@ export default function HomeScreen() {
     const renderItem = ({ item }: any) => (
       <View style={styles.card}>
         <Image source={{ uri: item.image }} style={styles.image} />
-        {/* <View style={styles.textContainer}>
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.description}>{item.description}</Text>
-          </View> */}
       </View>
     );
 
@@ -126,17 +108,15 @@ export default function HomeScreen() {
           onExplorePress={() => console.log("Explore all Trending Schemes")}
         />
 
-        <View style={{ flex: 1, paddingHorizontal: 15 }}>
-          <FlatList
-            // ref={flatListRef}
-            data={data}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            pagingEnabled
-            keyExtractor={(item) => item.id}
-            renderItem={renderItem}
-          />
-        </View>
+        <FlatList
+          data={data}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+          contentContainerStyle={styles.horizontalListContainer}
+        />
 
         <SectionHeader
           title="🔥 Trending Schemes"
@@ -153,10 +133,6 @@ export default function HomeScreen() {
               onPress={() => console.log(`${item.schemeTitle} pressed`)}
             />
           )}
-          customStyles={{
-            sectionTitleStyle: { color: "#01579b" },
-            exploreTextStyle: { color: "#ff5722" },
-          }}
         />
 
         {/* Other Schemes */}
@@ -164,7 +140,6 @@ export default function HomeScreen() {
           title="🔥 Other Schemes"
           onExplorePress={() => console.log("Explore all Other Schemes")}
         />
-        {/* Horizontal Tabs */}
         <HorizontalTabBar
           data={categories}
           activeTab={activeTab}
@@ -180,10 +155,6 @@ export default function HomeScreen() {
               onPress={() => console.log(`${item.schemeTitle} pressed`)}
             />
           )}
-          customStyles={{
-            sectionTitleStyle: { color: "#01579b" },
-            exploreTextStyle: { color: "#ff5722" },
-          }}
         />
       </>
     );
@@ -210,18 +181,9 @@ export default function HomeScreen() {
         <TouchableOpacity style={styles.FilterButton}>
           <Image
             source={require("../../assets/images/Filter_Icon.png")}
-            style={{ height: 40, width: 40 }}
+            style={styles.filterIcon}
           />
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: 600,
-              color: "#B89449",
-              marginLeft: 20,
-            }}
-          >
-            Explore Eligible Schemes
-          </Text>
+          <Text style={styles.filterText}>Explore Eligible Schemes</Text>
         </TouchableOpacity>
 
         {/* Featured Image */}
@@ -229,7 +191,6 @@ export default function HomeScreen() {
           imageUri={LocalImage}
           cardStyle={styles.cardStyle}
           imageStyle={styles.imageStyle}
-          TextComponent={undefined}
         />
 
         {/* Content */}
@@ -253,7 +214,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   errorText: {
-    fontSize: 16,
+    fontSize: width * 0.04,
     color: "red",
     textAlign: "center",
     marginVertical: 20,
@@ -263,8 +224,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff",
     borderRadius: 10,
-    padding: 12,
-    marginBottom: 8,
+    padding: width * 0.04,
+    marginBottom: width * 0.02,
     elevation: 1,
   },
   FilterButton: {
@@ -272,42 +233,52 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff",
     borderRadius: 10,
-    padding: 10,
-    marginTop: 20,
-    marginVertical: 5,
-    marginHorizontal: 16,
+    padding: width * 0.04,
+    marginTop: width * 0.05,
+    marginHorizontal: width * 0.04,
     elevation: 1,
     borderColor: "#B89449",
     borderWidth: 1,
   },
+  filterIcon: {
+    width: width * 0.08,
+    height: width * 0.08,
+  },
+  filterText: {
+    fontSize: width * 0.035,
+    fontWeight: "600",
+    color: "#B89449",
+    marginLeft: width * 0.05,
+  },
   listIcon: {
-    width: 40,
-    height: 40,
-    marginRight: 12,
+    width: width * 0.1,
+    height: width * 0.1,
+    marginRight: width * 0.05,
   },
   listTextContainer: {
     flex: 1,
-    // alignItems: "center",
   },
   listTitle: {
-    fontSize: 16,
+    fontSize: width * 0.04,
     fontWeight: "600",
     color: "#000",
   },
   listSubtitle: {
-    fontSize: 14,
+    fontSize: width * 0.035,
     color: "#666",
-    marginTop: 4,
+    marginTop: width * 0.01,
   },
   cardStyle: {
-    marginVertical: 16,
+    marginVertical: width * 0.05,
   },
   imageStyle: {
     width: "100%",
-    height: 200,
+    height: height * 0.25,
+  },
+  horizontalListContainer: {
+    paddingHorizontal: width * 0.04,
   },
   card: {
-    // paddingHorizontal: 10,
     width: width * 0.7,
     marginHorizontal: width * 0.04,
     borderRadius: 10,
@@ -316,6 +287,6 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 100,
+    height: height * 0.15,
   },
 });

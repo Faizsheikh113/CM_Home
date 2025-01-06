@@ -1,5 +1,7 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
+
+const { width } = Dimensions.get("window");
 
 interface ManKiBaatVideoSectionProps {
   title: string;
@@ -7,7 +9,11 @@ interface ManKiBaatVideoSectionProps {
   onPressViewAll: () => void;
 }
 
-const ManKiBaatVideoSection: React.FC<ManKiBaatVideoSectionProps> = ({ title, thumbnail, onPressViewAll }) => {
+const ManKiBaatVideoSection: React.FC<ManKiBaatVideoSectionProps> = ({
+  title,
+  thumbnail,
+  onPressViewAll,
+}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Check out Mann ki Baat</Text>
@@ -22,27 +28,30 @@ const ManKiBaatVideoSection: React.FC<ManKiBaatVideoSectionProps> = ({ title, th
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#FFF8E1",
-    borderRadius: 10,
-    padding: 16,
-    marginBottom: 20,
+    borderRadius: width * 0.03, // Dynamic border radius
+    padding: width * 0.04, // Dynamic padding
+    marginBottom: width * 0.05, // Dynamic margin
     alignItems: "center",
+    width: width * 0.9, // Container width relative to screen width
+    alignSelf: "center", // Center the container horizontally
   },
   header: {
-    fontSize: 18,
+    fontSize: width * 0.045, // Dynamic font size for the header
     fontWeight: "bold",
     color: "#333",
-    marginBottom: 10,
+    marginBottom: width * 0.03, // Dynamic margin for spacing
+    textAlign: "center",
   },
   thumbnail: {
     width: "100%",
-    height: 150,
-    borderRadius: 10,
-    marginBottom: 10,
+    height: width * 0.4, // Dynamic height for the image
+    borderRadius: width * 0.03, // Dynamic border radius for the image
+    marginBottom: width * 0.03, // Dynamic margin below the image
   },
   buttonText: {
     color: "#007BFF",
     fontWeight: "bold",
-    fontSize: 14,
+    fontSize: width * 0.035, // Dynamic font size for the button text
   },
 });
 

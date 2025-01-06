@@ -13,7 +13,7 @@ import CustomBackButton from "@/components/ReusableComponent/CustomBackButton";
 import FabButton from "@/components/ReusableComponent/CustomFABButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const HomeScreen = () => {
   const handleBackPress = () => {
@@ -34,7 +34,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Custom Header */}
         <CustomBackButton
           title="News Detail"
@@ -98,17 +98,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#F6F6F6",
     paddingTop: Platform.OS === "android" ? 0 : 0,
   },
+  scrollContent: {
+    paddingBottom: width * 0.05, // Add padding to the bottom to make space for FAB
+  },
   contentContainer: {
     padding: width * 0.04, // 4% padding of screen width
   },
   topNewsHeader: {
     color: "#F9453D",
-    fontSize: width * 0.035, // Adjust font size based on screen width
+    fontSize: width * 0.045, // Adjust font size based on screen width
     fontWeight: "bold",
     marginBottom: width * 0.02,
   },
   postedTime: {
-    fontSize: width * 0.03,
+    fontSize: width * 0.035, // Responsive font size
     color: "#777",
     marginBottom: width * 0.04,
   },
@@ -119,22 +122,21 @@ const styles = StyleSheet.create({
     marginBottom: width * 0.04,
   },
   mainTitle: {
-    fontSize: width * 0.045,
+    fontSize: width * 0.05, // Adjust font size based on screen width
     fontWeight: "bold",
     color: "#000",
     marginBottom: width * 0.02,
   },
   mainContent: {
-    fontSize: width * 0.035,
+    fontSize: width * 0.035, // Responsive font size
     color: "#333",
-    lineHeight: width * 0.05,
+    lineHeight: width * 0.05, // Adjust line height dynamically
     marginBottom: width * 0.04,
   },
   playerDetailsImage: {
     flex: 1,
     width: "100%",
     borderRadius: 20,
-    // height: "100%",
     marginTop: width * 0.04,
   },
 });

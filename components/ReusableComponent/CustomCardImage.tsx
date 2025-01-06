@@ -1,7 +1,16 @@
 import React from "react";
-import { View, Image, StyleSheet, Text } from "react-native";
+import { View, Image, StyleSheet, Dimensions } from "react-native";
 
-const ImageCard = ({ imageUri, cardStyle, imageStyle, TextComponent }) => {
+const { width, height } = Dimensions.get("window");
+
+interface ImageCardProps {
+  imageUri: { uri: string }; // Adjusted for proper typing of the image source
+  cardStyle?: object;
+  imageStyle?: object;
+  TextComponent?: React.ReactNode;
+}
+
+const ImageCard: React.FC<ImageCardProps> = ({ imageUri, cardStyle, imageStyle, TextComponent }) => {
   return (
     <View style={[styles.card, cardStyle]}>
       <Image source={imageUri} style={[styles.image, imageStyle]} />
@@ -12,19 +21,24 @@ const ImageCard = ({ imageUri, cardStyle, imageStyle, TextComponent }) => {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 10,
+    borderRadius: width * 0.03, // Dynamic border radius
     overflow: "hidden",
     backgroundColor: "#fff",
-    elevation: 3,
-    margin: 10,
-    marginHorizontal: 15,
+    elevation: 3, // Shadow for Android
+    shadowColor: "#000", // Shadow for iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    margin: width * 0.03,
+    marginHorizontal: width * 0.04,
   },
   image: {
     width: "100%",
-    height: 200,
+    height: height * 0.25, // Dynamic height based on screen size
+    resizeMode: "cover", // Ensure the image fits properly
   },
   textContainer: {
-    padding: 10,
+    padding: width * 0.03, // Dynamic padding
     backgroundColor: "#fff",
   },
 });

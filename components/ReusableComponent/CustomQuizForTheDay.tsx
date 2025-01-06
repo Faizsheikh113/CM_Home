@@ -1,5 +1,7 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 interface QuizCardProps {
   title: string;
@@ -20,12 +22,6 @@ const QuizCard: React.FC<QuizCardProps> = ({
 }) => {
   return (
     <View style={styles.outercontainer}>
-      {/* <View style={styles.header}>
-        <Text style={styles.title}>🚀 Quick Services</Text>
-        <TouchableOpacity>
-          <Text style={styles.explore}>Explore all</Text>
-        </TouchableOpacity>
-      </View> */}
       <View style={styles.container}>
         <Image source={{ uri: thumbnail }} style={styles.thumbnail} />
         <View style={styles.content}>
@@ -45,48 +41,37 @@ const QuizCard: React.FC<QuizCardProps> = ({
 
 const styles = StyleSheet.create({
   outercontainer: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingHorizontal: screenWidth * 0.04, // Dynamic padding based on screen size
+    paddingVertical: screenHeight * 0.02,
   },
   container: {
     backgroundColor: "#FFF",
-    borderRadius: 10,
-    marginBottom: 20,
+    borderRadius: screenWidth * 0.03, // Dynamic border radius
+    marginBottom: screenHeight * 0.02, // Dynamic margin based on screen size
     overflow: "hidden",
-    elevation: 3,
+    elevation: 3, // Elevation for shadow on Android
   },
   thumbnail: {
     width: "100%",
-    height: 150,
+    height: screenHeight * 0.2, // Dynamic height for the thumbnail
   },
   content: {
-    padding: 16,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  explore: {
-    fontSize: 14,
-    color: "#007BFF",
+    padding: screenWidth * 0.04, // Dynamic padding for content
   },
   title: {
-    fontSize: 18,
+    fontSize: screenWidth * 0.045, // Dynamic font size
     fontWeight: "bold",
     color: "#333",
   },
   details: {
-    fontSize: 14,
+    fontSize: screenWidth * 0.035, // Dynamic font size for details
     color: "#777",
-    marginTop: 5,
+    marginTop: screenHeight * 0.01, // Dynamic margin for spacing
   },
   button: {
-    marginTop: 10,
-    // backgroundColor: "#007BFF",
-    paddingVertical: 10,
-    borderRadius: 5,
+    marginTop: screenHeight * 0.015, // Dynamic margin for button
+    paddingVertical: screenHeight * 0.015, // Dynamic padding for button
+    borderRadius: screenWidth * 0.025, // Dynamic border radius
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#B89449",
@@ -94,7 +79,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#B89449",
     fontWeight: "bold",
-    fontSize: 14,
+    fontSize: screenWidth * 0.04, // Dynamic font size for button text
   },
 });
 

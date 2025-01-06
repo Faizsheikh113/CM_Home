@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { View, Text, Image, FlatList, Dimensions, StyleSheet } from "react-native";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const data = [
   {
@@ -80,41 +80,48 @@ const CustomCarousel = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: height * 0.02,
   },
   card: {
     width: width * 0.9,
     marginHorizontal: width * 0.05,
-    borderRadius: 10,
+    borderRadius: width * 0.03,
     overflow: "hidden",
     backgroundColor: "#fff",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
   image: {
     width: "100%",
-    height: 150,
+    height: height * 0.2, // Dynamic height
+    resizeMode: "cover",
   },
   textContainer: {
-    padding: 10,
+    padding: width * 0.03,
   },
   title: {
-    fontSize: 16,
+    fontSize: width * 0.045, // Dynamic font size
     fontWeight: "bold",
     color: "#000",
   },
   description: {
-    fontSize: 14,
+    fontSize: width * 0.04, // Dynamic font size
     color: "#666",
+    marginTop: height * 0.005,
   },
   pagination: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 10,
+    marginTop: height * 0.01,
   },
   dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginHorizontal: 4,
+    width: width * 0.02,
+    height: width * 0.02,
+    borderRadius: width * 0.01,
+    marginHorizontal: width * 0.01,
   },
   activeDot: {
     backgroundColor: "#B89449",

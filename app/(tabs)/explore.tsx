@@ -14,7 +14,7 @@ import FabButton from "@/components/ReusableComponent/CustomFABButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HorizontalTabBar from "@/components/ReusableComponent/customHorizontalBar";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const HomeScreen = () => {
   const [activeTab, setActiveTab] = useState("Details");
@@ -50,7 +50,6 @@ const HomeScreen = () => {
         />
 
         {/* Main Content */}
-        {/* Top News Header */}
         <View style={styles.headerContainer}>
           <Text style={styles.headerTitle}>
             Ministry of Housing & Urban Affairs
@@ -70,7 +69,6 @@ const HomeScreen = () => {
 
         {/* Content Section */}
         <View style={styles.contentContainer}>
-          {/* <View style={styles.contentContainer}> */}
           <Text style={styles.description}>
             Step into the world of innovation and creativity at our exclusive UI
             design event! Whether you're a seasoned designer or just starting
@@ -82,13 +80,11 @@ const HomeScreen = () => {
           </Text>
 
           {/* Horizontal Tabs */}
-          <View style={{ flex: 1 }}>
-            <HorizontalTabBar
-              data={categories}
-              activeTab={activeTab}
-              onTabPress={(tab) => setActiveTab(tab)}
-            />
-          </View>
+          <HorizontalTabBar
+            data={categories}
+            activeTab={activeTab}
+            onTabPress={(tab) => setActiveTab(tab)}
+          />
 
           {/* Content Repetition for Tab Example */}
           <Text style={styles.description}>
@@ -100,34 +96,15 @@ const HomeScreen = () => {
             and create user experiences that truly captivate. Don't miss
             out—let's shape the future of design together!
           </Text>
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: 10,
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              backgroundColor: "#B48D3E",
-              width: width * 0.9,
-              borderRadius: 5,
-            }}
-          >
-            <Text
-              style={{
-                color: "white",
-                textAlign: "center",
-                padding: 10,
-                alignItems: "center",
-                fontSize:16,
-                fontWeight:'500'
-              }}
-            >
-              Check eligliblity
-            </Text>
-          </TouchableOpacity>
-        </View>
+
+          {/* Eligibility Button */}
+          <View style={styles.eligibilityButtonContainer}>
+            <TouchableOpacity style={styles.eligibilityButton}>
+              <Text style={styles.eligibilityButtonText}>
+                Check Eligibility
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
 
@@ -144,44 +121,7 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === "android" ? 0 : 0,
   },
   contentContainer: {
-    padding: width * 0.05,
-    // 4% padding of screen width
-  },
-  topNewsHeader: {
-    color: "#F9453D",
-    fontSize: width * 0.035, // Adjust font size based on screen width
-    fontWeight: "bold",
-    marginBottom: width * 0.02,
-  },
-  postedTime: {
-    fontSize: width * 0.03,
-    color: "#777",
-    marginBottom: width * 0.04,
-  },
-  mainImage: {
-    width: "100%",
-    height: width * 0.5, // Adjust height dynamically based on screen width
-    borderRadius: 10,
-    marginBottom: width * 0.04,
-  },
-  mainTitle: {
-    fontSize: width * 0.045,
-    fontWeight: "bold",
-    color: "#000",
-    marginBottom: width * 0.02,
-  },
-  mainContent: {
-    fontSize: width * 0.035,
-    color: "#333",
-    lineHeight: width * 0.05,
-    marginBottom: width * 0.04,
-  },
-  playerDetailsImage: {
-    flex: 1,
-    width: "100%",
-    borderRadius: 20,
-    // height: "100%",
-    marginTop: width * 0.04,
+    padding: width * 0.05, // Adjust padding dynamically
   },
   headerContainer: {
     padding: width * 0.05,
@@ -190,7 +130,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#DDD",
   },
   headerTitle: {
-    fontSize: width * 0.045,
+    fontSize: width * 0.045, // Adjust font size based on screen width
     color: "#333",
     fontWeight: "bold",
     marginBottom: width * 0.02,
@@ -222,7 +162,24 @@ const styles = StyleSheet.create({
     color: "#444",
     textAlign: "justify",
     lineHeight: width * 0.055,
-    // marginBottom: width * 0.05,
+    marginBottom: width * 0.05, // Adjust bottom margin for spacing
+  },
+  eligibilityButtonContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: height * 0.05, // Adjust for larger screens
+  },
+  eligibilityButton: {
+    backgroundColor: "#B48D3E",
+    width: width * 0.9,
+    borderRadius: 5,
+  },
+  eligibilityButtonText: {
+    color: "white",
+    textAlign: "center",
+    padding: 10,
+    fontSize: 16,
+    fontWeight: "500",
   },
 });
 

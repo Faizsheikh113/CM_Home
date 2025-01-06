@@ -1,13 +1,13 @@
 import React from "react";
 import {
   View,
-  Text,
   TextInput,
-  TouchableOpacity,
   StyleSheet,
   Image,
+  Dimensions,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+
+const { width: screenWidth } = Dimensions.get("window");
 
 interface CustomSearchBarProps {
   placeholder: string;
@@ -39,16 +39,15 @@ const CustomSearchBar: React.FC<CustomSearchBarProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
-    // marginBottom: 2,
+    paddingHorizontal: screenWidth * 0.05, // Dynamic horizontal padding based on screen width
   },
   searchBox: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#F5F5F5",
-    borderRadius: 15,
-    paddingVertical: 3,
-    paddingHorizontal: 15,
+    borderRadius: screenWidth * 0.04, // Dynamic border radius based on screen width
+    paddingVertical: screenWidth * 0.02, // Dynamic vertical padding based on screen width
+    paddingHorizontal: screenWidth * 0.05, // Dynamic horizontal padding based on screen width
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -56,11 +55,13 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   searchIcon: {
-    marginRight: 10,
+    marginRight: screenWidth * 0.03, // Dynamic margin based on screen width
+    width: screenWidth * 0.06, // Dynamic icon size based on screen width
+    height: screenWidth * 0.06, // Dynamic icon size based on screen width
   },
   input: {
     flex: 1,
-    fontSize: 16,
+    fontSize: screenWidth * 0.04, // Dynamic font size based on screen width
     color: "#333",
   },
 });

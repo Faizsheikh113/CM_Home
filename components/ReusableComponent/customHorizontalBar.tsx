@@ -5,7 +5,10 @@ import {
   TouchableOpacity,
   StyleSheet,
   View,
+  Dimensions,
 } from "react-native";
+
+const { width } = Dimensions.get("window");
 
 type HorizontalTabBarProps = {
   data: string[];
@@ -43,22 +46,21 @@ const HorizontalTabBar: React.FC<HorizontalTabBarProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: width * 0.02, // 2% horizontal padding
   },
   tab: {
-    paddingVertical: 8,
-    paddingHorizontal: 15,
+    paddingVertical: width * 0.02, // Vertical padding relative to width
+    paddingHorizontal: width * 0.04, // Horizontal padding relative to width
     borderColor: "#B89449",
     borderWidth: 1,
-    borderRadius: 10,
-    marginHorizontal: 5,
+    borderRadius: width * 0.03, // Dynamic border radius
+    marginHorizontal: width * 0.01, // Spacing between tabs
   },
   activeTab: {
-    backgroundColor: "#B89449", // Active tab color
+    backgroundColor: "#B89449", // Active tab background color
   },
   tabText: {
-    fontSize: 14,
+    fontSize: width * 0.035, // Font size relative to width
     color: "#333",
     fontWeight: "600",
   },
