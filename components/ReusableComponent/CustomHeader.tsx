@@ -23,7 +23,7 @@ import {
   Inter_700Bold,
   Inter_800ExtraBold,
   Inter_900Black,
-} from '@expo-google-fonts/inter';
+} from "@expo-google-fonts/inter";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -80,6 +80,10 @@ const Header: React.FC<HeaderProps> = ({
       justifyContent: "space-between",
       paddingHorizontal: getPadding(), // Dynamic padding
     },
+    logoStyle: {
+      alignItems: "center",
+      flexDirection: "row",
+    },
     logo: {
       width: getLogoSize(), // Dynamic logo size
       height: getLogoSize(), // Dynamic logo size
@@ -88,17 +92,18 @@ const Header: React.FC<HeaderProps> = ({
     button: {
       backgroundColor: "#B89449",
       borderRadius: normalize(20),
-      width: getButtonWidth(), // Dynamic button width
-      height: normalize(35),
+      // width: getButtonWidth(), // Dynamic button width
+      // height: normalize(35),
       borderBottomLeftRadius: 0,
-      justifyContent: "center",
+      justifyContent: "flex-start",
       alignItems: "center",
       borderColor: "#DFAF4D",
       borderWidth: 2,
-      marginRight: normalize(50),
+      padding: normalize(5),
+      marginHorizontal: 10,
     },
     buttonText: {
-      fontFamily: 'Inter_400Regular',
+      fontFamily: "Inter_400Regular",
       color: "#FFF",
       fontWeight: "600",
       fontSize: normalize(FONT_SIZE.small),
@@ -142,15 +147,17 @@ const Header: React.FC<HeaderProps> = ({
     >
       <View style={styles.headerContainer}>
         {/* Logo */}
-        <Image
-          source={require("../../assets/images/Emblem_of_Madhya_Pradesh.png")}
-          style={styles.logo}
-        />
+        <View style={styles.logoStyle}>
+          <Image
+            source={require("../../assets/images/Emblem_of_Madhya_Pradesh.png")}
+            style={styles.logo}
+          />
 
-        {/* Button */}
-        <TouchableOpacity onPress={onButtonPress} style={styles.button}>
-          <Text style={styles.buttonText}>{buttonLabel}</Text>
-        </TouchableOpacity>
+          {/* Button */}
+          <TouchableOpacity onPress={onButtonPress} style={styles.button}>
+            <Text style={styles.buttonText}>{buttonLabel}</Text>
+          </TouchableOpacity>
+        </View>
 
         {/* Language and Profile */}
         <View style={styles.languageProfileContainer}>

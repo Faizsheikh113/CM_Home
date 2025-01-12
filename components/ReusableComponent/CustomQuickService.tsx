@@ -22,7 +22,7 @@ import {
   Inter_700Bold,
   Inter_800ExtraBold,
   Inter_900Black,
-} from '@expo-google-fonts/inter';
+} from "@expo-google-fonts/inter";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -85,7 +85,7 @@ const QuickServices: React.FC = () => {
       <FlatList
         data={quickServices}
         renderItem={renderQuickServiceItem}
-        numColumns={2}  // Always use 2 columns
+        numColumns={2} // Always use 2 columns
         keyExtractor={(item) => item.id.toString()}
         columnWrapperStyle={styles.serviceRow}
         showsVerticalScrollIndicator={false}
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: (SCREEN_WIDTH - normalize(48)) / 2, // Fixed 2-column layout, ensuring the width is consistent across devices
     height: SCREEN_HEIGHT * 0.2, // Proportional height based on screen size to maintain a consistent look
-    padding: normalize(10),
+    // padding: normalize(10),
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
@@ -121,22 +121,24 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   serviceIcon: {
-    width: normalize(50),  // Scalable icon size
+    width: normalize(50), // Scalable icon size
     height: normalize(50), // Scalable icon size
     resizeMode: "contain",
     marginBottom: normalize(8),
   },
   serviceName: {
-    fontFamily: 'Inter_400Regular',
+    fontFamily: "Inter_400Regular",
     fontSize: normalize(FONT_SIZE.medium), // Responsive font size for name
     fontWeight: "bold",
     color: COLORS.HeadingColor,
+    letterSpacing: 1,
   },
   serviceDescription: {
-    fontFamily: 'Inter_400Regular',
-    fontSize: normalize(FONT_SIZE.small), // Responsive font size for description
+    fontFamily: "Inter_400Regular",
+    // fontSize: normalize(FONT_SIZE.small), // Responsive font size for description
     color: COLORS.GrayColor,
     textAlign: "center",
     marginTop: normalize(5),
+    width: normalize(130),
   },
 });
