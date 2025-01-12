@@ -1,9 +1,24 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Platform } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { Dimensions, PixelRatio } from "react-native";
+import { COLORS } from "@/assets/Constants/Colors";
 
-const { width, height } = Dimensions.get("window");
+// Get screen dimensions for responsive design
+const { width } = Dimensions.get("window");
+
+// Normalize function for consistent scaling
+const normalize = (size: number) => {
+  const scale = width / 375; // Base design width is 375 (for reference)
+  return Math.round(PixelRatio.roundToNearestPixel(size * scale));
+};
 
 interface HeaderProps {
   title: string;
@@ -32,7 +47,11 @@ const CustomBackButton: React.FC<HeaderProps> = ({
       <View style={styles.headerContainer}>
         {/* Back Button */}
         <TouchableOpacity onPress={onBackPress} style={styles.backButton}>
-          <Ionicons name="chevron-back-outline" size={width * 0.07} color="#000" />
+          <Ionicons
+            name="chevron-back-outline"
+            size={normalize(20)}
+            color="#000"
+          />
         </TouchableOpacity>
 
         {/* Title */}
@@ -42,14 +61,22 @@ const CustomBackButton: React.FC<HeaderProps> = ({
         {showShare && (
           <View style={styles.iconWrapper}>
             <TouchableOpacity onPress={onSharePress} style={styles.iconButton}>
-              <Ionicons name="share-social-outline" size={width * 0.06} color="#000" />
+              <Ionicons
+                name="share-social-outline"
+                size={normalize(20)}
+                color="#000"
+              />
             </TouchableOpacity>
           </View>
         )}
         {showSave && (
           <View style={styles.iconWrapper}>
             <TouchableOpacity onPress={onSavePress} style={styles.iconButton}>
-              <Ionicons name="bookmark-outline" size={width * 0.06} color="#000" />
+              <Ionicons
+                name="bookmark-outline"
+                size={normalize(20)}
+                color="#000"
+              />
             </TouchableOpacity>
           </View>
         )}
@@ -60,43 +87,44 @@ const CustomBackButton: React.FC<HeaderProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    height: height * 0.08, // Adjust based on screen height
+    height: normalize(100), // Adjust height dynamically
     justifyContent: "center",
-    paddingTop: Platform.OS === "android" ? 10 : 0, // Adjust padding for Android/iOS
+    paddingTop: Platform.OS === "android" ? normalize(10) : 0,
+    // marginTop: normalize(10), // Add margin from the top
   },
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: width * 0.05, // 5% of screen width
+    paddingHorizontal: normalize(16),
   },
   backButton: {
-    padding: width * 0.02,
-    borderColor: "gray",
+    padding: normalize(8),
+    borderColor: COLORS.GrayColor,
     borderWidth: 0.5,
-    backgroundColor: "white",
-    borderRadius: width * 0.02,
+    backgroundColor: COLORS.WhiteColor,
+    borderRadius: normalize(8),
   },
   title: {
-    fontSize: width * 0.045, // Responsive font size
+    fontSize: normalize(16),
     fontWeight: "500",
-    color: "#000",
+    color: COLORS.HeadingColor,
     textAlign: "center",
-    flex: 1,
-    marginHorizontal: width * 0.02,
+    marginHorizontal: normalize(8),
   },
   iconWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    borderColor: "gray",
+    borderColor: COLORS.GrayColor,
     borderWidth: 0.5,
-    backgroundColor: "white",
-    borderRadius: width * 0.05,
-    marginLeft: width * 0.02,
+    backgroundColor: COLORS.WhiteColor,
+    borderRadius: normalize(8),
+    marginLeft: normalize(8),
   },
   iconButton: {
-    padding: width * 0.02, // Dynamic padding
+    padding: normalize(8),
   },
 });
+
 
 export default CustomBackButton;

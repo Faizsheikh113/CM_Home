@@ -1,13 +1,49 @@
+import { FONT_SIZE, InterFont } from "@/assets/fonts/Constants";
 import React from "react";
+import { View, TextInput, StyleSheet, Image, Dimensions, PixelRatio } from "react-native";
 import {
-  View,
-  TextInput,
-  StyleSheet,
-  Image,
-  Dimensions,
-} from "react-native";
+  useFonts,
+  Inter_100Thin,
+  Inter_200ExtraLight,
+  Inter_300Light,
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  Inter_800ExtraBold,
+  Inter_900Black,
+} from '@expo-google-fonts/inter';
+const { width, height } = Dimensions.get("window");
 
-const { width: screenWidth } = Dimensions.get("window");
+// Normalize function for consistent scaling
+const normalize = (size: number) => {
+  const scale = width / 375; // Base design width is 375 (for reference)
+  return Math.round(PixelRatio.roundToNearestPixel(size * scale));
+};
+
+// Check if the device screen is large (e.g., foldable devices)
+const isLargeScreen = width > 600; // Adjust the threshold as per requirement
+
+const getSearchBoxPadding = () => {
+  if (isLargeScreen) {
+    return normalize(20); // More padding for larger devices (e.g., foldables)
+  }
+  return normalize(16); // Default padding for smaller devices
+};
+
+const getIconSize = () => {
+  if (isLargeScreen) {
+    return normalize(30); // Larger icon for foldables or large devices
+  }
+  return normalize(24); // Default icon size for small to medium devices
+};
+
+const getInputFontSize = () => {
+  if (isLargeScreen) {
+    return normalize(FONT_SIZE.medium); // Larger font for larger devices
+  }
+  return normalize(FONT_SIZE.small); // Default font size for small to medium devices
+};
 
 interface CustomSearchBarProps {
   placeholder: string;
@@ -18,6 +54,48 @@ const CustomSearchBar: React.FC<CustomSearchBarProps> = ({
   placeholder,
   onSearch,
 }) => {
+  const styles = StyleSheet.create({
+    container: {
+      paddingHorizontal: getSearchBoxPadding(), // Responsive padding
+      marginTop: normalize(5), // Adjust margin top for consistency
+    },
+    searchBox: {
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: "#F5F5F5",
+      borderRadius: normalize(12), // Responsive border radius
+      borderColor: "#D0CFCF",
+      paddingHorizontal: getSearchBoxPadding(), // Dynamic padding inside the search box
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 3,
+    },
+    searchIcon: {
+      width: getIconSize(), // Responsive icon size
+      height: getIconSize(), // Responsive icon size
+      alignItems: "center",
+    },
+    input: {
+      fontFamily: 'Inter_400Regular',
+      fontWeight: "600",
+      fontSize: getInputFontSize(), // Responsive font size for input
+      flex: 1, // To ensure the input field takes up remaining space
+    },
+  });
+  let [fontsLoaded] = useFonts({
+    Inter_100Thin,
+    Inter_200ExtraLight,
+    Inter_300Light,
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+    Inter_800ExtraBold,
+    Inter_900Black,
+  });
+
   return (
     <View style={styles.container}>
       {/* Search Input Section */}
@@ -36,34 +114,5 @@ const CustomSearchBar: React.FC<CustomSearchBarProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: screenWidth * 0.05, // Dynamic horizontal padding based on screen width
-  },
-  searchBox: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#F5F5F5",
-    borderRadius: screenWidth * 0.04, // Dynamic border radius based on screen width
-    paddingVertical: screenWidth * 0.02, // Dynamic vertical padding based on screen width
-    paddingHorizontal: screenWidth * 0.05, // Dynamic horizontal padding based on screen width
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  searchIcon: {
-    marginRight: screenWidth * 0.03, // Dynamic margin based on screen width
-    width: screenWidth * 0.06, // Dynamic icon size based on screen width
-    height: screenWidth * 0.06, // Dynamic icon size based on screen width
-  },
-  input: {
-    flex: 1,
-    fontSize: screenWidth * 0.04, // Dynamic font size based on screen width
-    color: "#333",
-  },
-});
 
 export default CustomSearchBar;

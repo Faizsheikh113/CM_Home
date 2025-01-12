@@ -1,3 +1,4 @@
+import { FONT_SIZE } from "@/assets/fonts/Constants";
 import React from "react";
 import {
   FlatList,
@@ -9,6 +10,12 @@ import {
 } from "react-native";
 
 const { width } = Dimensions.get("window");
+
+// Normalize function for consistent scaling
+const normalize = (size: number) => {
+  const scale = width / 375; // Base design width is 375
+  return Math.round(size * scale);
+};
 
 type HorizontalTabBarProps = {
   data: string[];
@@ -46,22 +53,23 @@ const HorizontalTabBar: React.FC<HorizontalTabBarProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: width * 0.02, // 2% horizontal padding
+    flexWrap:'wrap',
+    paddingHorizontal: normalize(8), // Adjust horizontal padding
   },
   tab: {
-    paddingVertical: width * 0.02, // Vertical padding relative to width
-    paddingHorizontal: width * 0.04, // Horizontal padding relative to width
+    paddingVertical: normalize(7), // Vertical padding
+    paddingHorizontal: normalize(16), // Horizontal padding
     borderColor: "#B89449",
     borderWidth: 1,
-    borderRadius: width * 0.03, // Dynamic border radius
-    marginHorizontal: width * 0.01, // Spacing between tabs
+    borderRadius: normalize(10), // Dynamic border radius
+    marginHorizontal: normalize(5), // Spacing between tabs
   },
   activeTab: {
     backgroundColor: "#B89449", // Active tab background color
   },
   tabText: {
-    fontSize: width * 0.035, // Font size relative to width
-    color: "#333",
+    fontSize: normalize(FONT_SIZE.small), // Font size
+    color: "#B89449",
     fontWeight: "600",
   },
   activeTabText: {

@@ -1,5 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
-import { View, Text, Image, FlatList, Dimensions, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  Dimensions,
+  StyleSheet,
+} from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
@@ -8,19 +15,19 @@ const data = [
     id: "1",
     title: "Ladli Behna Yojna",
     description: "This month, get up to ₹1250",
-    image: "https://via.placeholder.com/350x150", // Replace with actual image URLs
+    image: "https://via.placeholder.com/350x150",
   },
   {
     id: "2",
     title: "Health Initiative",
     description: "Get free health checkups nearby",
-    image: "https://via.placeholder.com/350x150",
+    image: "https://via.placeholder.com/350x151",
   },
   {
     id: "3",
     title: "Education Campaign",
     description: "Empower yourself with knowledge",
-    image: "https://via.placeholder.com/350x150",
+    image: "https://via.placeholder.com/350x152",
   },
 ];
 
@@ -41,13 +48,24 @@ const CustomCarousel = () => {
     return () => clearInterval(interval); // Cleanup the interval on component unmount
   }, [currentIndex]);
 
+  const onViewableItemsChanged = ({ viewableItems }: any) => {
+    if (viewableItems.length > 0) {
+      const index = viewableItems[0].index;
+      setCurrentIndex(index);
+    }
+  };
+
+  const viewabilityConfig = {
+    itemVisiblePercentThreshold: 50, // This makes sure that an item is considered "viewable" when at least 50% of it is visible
+  };
+
   const renderItem = ({ item }: any) => (
     <View style={styles.card}>
       <Image source={{ uri: item.image }} style={styles.image} />
-      <View style={styles.textContainer}>
+      {/* <View style={styles.textContainer}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.description}>{item.description}</Text>
-      </View>
+      </View> */}
     </View>
   );
 
@@ -61,6 +79,8 @@ const CustomCarousel = () => {
         pagingEnabled
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
+        onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={viewabilityConfig}
       />
       {/* Pagination Dots */}
       <View style={styles.pagination}>
@@ -80,7 +100,7 @@ const CustomCarousel = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: height * 0.02,
+    marginTop: height * 0.01,
   },
   card: {
     width: width * 0.9,
@@ -93,10 +113,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
+    height: (231 / 812) * height,
   },
   image: {
     width: "100%",
-    height: height * 0.2, // Dynamic height
+    height: (231 / 812) * height,
     resizeMode: "cover",
   },
   textContainer: {

@@ -1,15 +1,38 @@
 import { Tabs } from "expo-router";
 import React from "react";
-import { Image, Platform } from "react-native";
-
+import {
+  Dimensions,
+  Image,
+  PixelRatio,
+  Platform,
+  StyleSheet,
+} from "react-native";
 import { HapticTab } from "@/components/HapticTab";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+const { width, height } = Dimensions.get("window");
+
+// Normalize function for consistent scaling
+const normalize = (size: number) => {
+  const scale = width / 375; // Base design width is 375 (for reference)
+  return Math.round(PixelRatio.roundToNearestPixel(size * scale));
+};
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+
+  const styles = StyleSheet.create({
+    tabBarIcon: {
+      flex: 1,
+      justifyContent: "center",
+    },
+    tabBarStyle: {
+      paddingBottom: normalize(3), // Adjust margin top for responsive design
+      height: normalize(60),
+    },
+  });
 
   return (
     <Tabs
@@ -18,18 +41,8 @@ export default function TabLayout() {
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
-        tabBarIconStyle: {
-          marginTop: "10%",
-          paddingVertical: 3,
-        },
-        tabBarStyle: { height: "7%" },
-        // Platform.select({
-        //   ios: {
-        //     // Use a transparent background on iOS to show the blur effect
-        //     position: "absolute",
-        //   },
-        //   default: {},
-        // }),
+        tabBarIconStyle: styles.tabBarIcon,
+        tabBarStyle: styles.tabBarStyle,
       }}
     >
       <Tabs.Screen
@@ -37,8 +50,10 @@ export default function TabLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => (
-            <Image source={require("../../assets/images/home.png")} />
-            // <IconSymbol size={28} name="house.fill" color={color} />
+            <Image
+              source={require("../../assets/images/home.png")}
+              style={{ width: normalize(24), height: normalize(24) }} // Responsive icon size
+            />
           ),
         }}
       />
@@ -47,8 +62,10 @@ export default function TabLayout() {
         options={{
           title: "News",
           tabBarIcon: ({ color }) => (
-            <Image source={require("../../assets/images/news.png")} />
-            // <IconSymbol size={28} name="newspaper.fill" color={color} />
+            <Image
+              source={require("../../assets/images/news.png")}
+              style={{ width: normalize(24), height: normalize(24) }} // Responsive icon size
+            />
           ),
         }}
       />
@@ -57,8 +74,10 @@ export default function TabLayout() {
         options={{
           title: "Scheme",
           tabBarIcon: ({ color }) => (
-            <Image source={require("../../assets/images/paper.png")} />
-            // <IconSymbol size={28} name="article.fill" color={color} />
+            <Image
+              source={require("../../assets/images/paper.png")}
+              style={{ width: normalize(24), height: normalize(24) }} // Responsive icon size
+            />
           ),
         }}
       />
@@ -67,8 +86,10 @@ export default function TabLayout() {
         options={{
           title: "CM connect",
           tabBarIcon: ({ color }) => (
-            <Image source={require("../../assets/images/speaker.png")} />
-            // <IconSymbol size={28} name="account-box.fill" color={color} />
+            <Image
+              source={require("../../assets/images/speaker.png")}
+              style={{ width: normalize(24), height: normalize(24) }} // Responsive icon size
+            />
           ),
         }}
       />
@@ -77,8 +98,10 @@ export default function TabLayout() {
         options={{
           title: "Helpline",
           tabBarIcon: ({ color }) => (
-            <Image source={require("../../assets/images/image 14.png")} />
-            // <IconSymbol size={28} name="contact-support.fill" color={color} />
+            <Image
+              source={require("../../assets/images/image 14.png")}
+              style={{ width: normalize(24), height: normalize(24) }} // Responsive icon size
+            />
           ),
         }}
       />

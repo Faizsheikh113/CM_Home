@@ -1,3 +1,5 @@
+import { COLORS } from "@/assets/Constants/Colors";
+import { FONT_SIZE, InterFont } from "@/assets/fonts/Constants";
 import React from "react";
 import {
   View,
@@ -6,30 +8,50 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  PixelRatio,
 } from "react-native";
+import {
+  useFonts,
+  Inter_100Thin,
+  Inter_200ExtraLight,
+  Inter_300Light,
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  Inter_800ExtraBold,
+  Inter_900Black,
+} from '@expo-google-fonts/inter';
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+// Get screen dimensions for responsive design
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
+
+// Normalize function for consistent scaling
+const normalize = (size: number) => {
+  const scale = SCREEN_WIDTH / 375; // Base design width is 375 (for reference)
+  return Math.round(PixelRatio.roundToNearestPixel(size * scale));
+};
 
 type SectionHeaderProps = {
   title: string;
   onExplorePress?: () => void;
   customStyles?: {
-    sectionHeaderStyle?: any;
-    sectionTitleStyle?: any;
-    exploreTextStyle?: any;
+    sectionHeaderStyle?: object;
+    sectionTitleStyle?: object;
+    exploreTextStyle?: object;
   };
 };
 
 type RowListButtonReusableProps = {
-  listData: Array<any>;
+  listData: Array<{ id: number | string; [key: string]: any }>;
   sectionTitle?: string;
   onExplorePress?: () => void;
-  renderItem: ({ item }: { item: any }) => JSX.Element; // Allow a custom ListItem component
+  renderItem: ({ item }: { item: any }) => JSX.Element;
   customStyles?: {
-    containerStyle?: any;
-    sectionHeaderStyle?: any;
-    sectionTitleStyle?: any;
-    exploreTextStyle?: any;
+    containerStyle?: object;
+    sectionHeaderStyle?: object;
+    sectionTitleStyle?: object;
+    exploreTextStyle?: object;
   };
 };
 
@@ -40,6 +62,17 @@ export const SectionHeader = ({
 }: SectionHeaderProps) => {
   const { sectionHeaderStyle, sectionTitleStyle, exploreTextStyle } =
     customStyles;
+    let [fontsLoaded] = useFonts({
+      Inter_100Thin,
+      Inter_200ExtraLight,
+      Inter_300Light,
+      Inter_400Regular,
+      Inter_500Medium,
+      Inter_600SemiBold,
+      Inter_700Bold,
+      Inter_800ExtraBold,
+      Inter_900Black,
+    });
 
   return (
     <View style={[styles.sectionHeader, sectionHeaderStyle]}>
@@ -62,12 +95,7 @@ const RowListButtonReusable = ({
   renderItem,
   customStyles = {},
 }: RowListButtonReusableProps) => {
-  const {
-    containerStyle,
-    sectionHeaderStyle,
-    sectionTitleStyle,
-    exploreTextStyle,
-  } = customStyles;
+  const { containerStyle, sectionHeaderStyle, sectionTitleStyle, exploreTextStyle } = customStyles;
 
   return (
     <View style={[styles.container, containerStyle]}>
@@ -98,24 +126,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f8f8f8",
-    paddingHorizontal: screenWidth * 0.04, // Dynamic horizontal padding based on screen width
-    paddingVertical: screenHeight * 0.02, // Dynamic vertical padding based on screen height
-    borderRadius: screenWidth * 0.05, // Dynamic border radius based on screen width
+    paddingHorizontal: normalize(16),
+    paddingVertical: normalize(10),
+    borderRadius: normalize(12),
   },
   sectionHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: screenHeight * 0.015, // Adjust margin bottom based on screen height
-    paddingHorizontal: screenWidth * 0.05, // Dynamic horizontal padding for header
+    marginVertical: normalize(8),
+    paddingHorizontal: normalize(20),
   },
   sectionTitle: {
-    fontSize: screenWidth * 0.045, // Dynamic font size based on screen width
+    fontFamily: 'Inter_400Regular',
+    fontSize: normalize(FONT_SIZE.large), // Responsive font size
     fontWeight: "600",
-    color: "#333",
+    color: COLORS.HeadingColor,
   },
   exploreText: {
-    fontSize: screenWidth * 0.04, // Dynamic font size for explore text
+    fontSize: normalize(FONT_SIZE.medium), // Responsive font size
     color: "#B89449",
     fontWeight: "600",
   },

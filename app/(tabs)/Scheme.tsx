@@ -10,6 +10,7 @@ import {
   FlatList,
   Dimensions,
   Platform,
+  PixelRatio,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -28,9 +29,17 @@ import { fetchSchemes } from "@/Redux/Sclise/SchemeSclise";
 // Local Assets
 import LocalImage from "../../assets/images/ScheamPageImage.png";
 import HorizontalTabBar from "@/components/ReusableComponent/customHorizontalBar";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { COLORS } from "@/assets/Constants/Colors";
+import { FONT_SIZE, InterFont } from "@/assets/fonts/Constants";
 
+// Get screen dimensions for responsive design
 const { width, height } = Dimensions.get("window");
+
+// Normalize function for consistent scaling
+const normalize = (size: number) => {
+  const scale = width / 375; // Base design width is 375 (for reference)
+  return Math.round(PixelRatio.roundToNearestPixel(size * scale));
+};
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -161,7 +170,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView>
         {/* Header */}
         <Header
@@ -199,7 +208,7 @@ export default function HomeScreen() {
         {/* Floating Action Button */}
       </ScrollView>
       <FabButton onPress={handleFabPress} />
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -207,83 +216,83 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: COLORS.BackGroundColor,
     paddingTop: Platform.OS === "android" ? 0 : 0,
   },
   loader: {
-    marginVertical: 20,
+    marginVertical: normalize(16),
   },
   errorText: {
-    fontSize: width * 0.04,
+    fontSize: normalize(FONT_SIZE.small),
     color: "red",
     textAlign: "center",
-    marginVertical: 20,
+    marginVertical: normalize(16),
   },
   listItem: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    padding: width * 0.04,
-    marginBottom: width * 0.02,
+    backgroundColor: COLORS.WhiteColor,
+    borderRadius: normalize(10),
+    padding: normalize(16),
+    marginBottom: normalize(8),
     elevation: 1,
   },
   FilterButton: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    padding: width * 0.04,
-    marginTop: width * 0.05,
-    marginHorizontal: width * 0.04,
+    backgroundColor: COLORS.WhiteColor,
+    borderRadius: normalize(10),
+    padding: normalize(16),
+    marginTop: normalize(24),
+    marginHorizontal: normalize(16),
     elevation: 1,
     borderColor: "#B89449",
     borderWidth: 1,
   },
   filterIcon: {
-    width: width * 0.08,
-    height: width * 0.08,
+    width: normalize(30),
+    height: normalize(30),
   },
   filterText: {
-    fontSize: width * 0.035,
+    fontSize: normalize(14),
     fontWeight: "600",
     color: "#B89449",
-    marginLeft: width * 0.05,
+    marginLeft: normalize(16),
   },
   listIcon: {
-    width: width * 0.1,
-    height: width * 0.1,
-    marginRight: width * 0.05,
+    width: normalize(40),
+    height: normalize(40),
+    marginRight: normalize(16),
   },
   listTextContainer: {
     flex: 1,
   },
   listTitle: {
-    fontSize: width * 0.04,
+    fontSize: normalize(FONT_SIZE.medium),
     fontWeight: "600",
-    color: "#000",
+    color: COLORS.HeadingColor,
   },
   listSubtitle: {
-    fontSize: width * 0.035,
-    color: "#666",
-    marginTop: width * 0.01,
+    fontSize: normalize(FONT_SIZE.small),
+    color: COLORS.LightGrayColor,
+    marginTop: normalize(8),
   },
   cardStyle: {
-    marginVertical: width * 0.05,
+    marginVertical: normalize(24),
   },
   imageStyle: {
     width: "100%",
     height: height * 0.25,
   },
   horizontalListContainer: {
-    paddingHorizontal: width * 0.04,
+    paddingHorizontal: normalize(16),
   },
   card: {
     width: width * 0.7,
-    marginHorizontal: width * 0.04,
-    borderRadius: 10,
+    marginHorizontal: normalize(16),
+    borderRadius: normalize(10),
     overflow: "hidden",
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.WhiteColor,
   },
   image: {
     width: "100%",

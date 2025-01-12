@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  Image,
   TouchableOpacity,
   Dimensions,
   Platform,
@@ -13,10 +12,42 @@ import CustomBackButton from "@/components/ReusableComponent/CustomBackButton";
 import FabButton from "@/components/ReusableComponent/CustomFABButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HorizontalTabBar from "@/components/ReusableComponent/customHorizontalBar";
+import { FONT_SIZE, InterFont } from "@/assets/fonts/Constants";
+import { COLORS } from "@/assets/Constants/Colors";
+import {
+  useFonts,
+  Inter_100Thin,
+  Inter_200ExtraLight,
+  Inter_300Light,
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  Inter_800ExtraBold,
+  Inter_900Black,
+} from '@expo-google-fonts/inter';
 
+// Get screen dimensions
 const { width, height } = Dimensions.get("window");
 
+// Normalize function for consistent scaling
+const normalize = (size: number) => {
+  const scale = width / 375; // Base design width is 375
+  return Math.round(size * scale);
+};
+
 const HomeScreen = () => {
+  let [fontsLoaded] = useFonts({
+    Inter_100Thin,
+    Inter_200ExtraLight,
+    Inter_300Light,
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+    Inter_800ExtraBold,
+    Inter_900Black,
+  });
   const [activeTab, setActiveTab] = useState("Details");
 
   const categories = ["Details", "Benefits", "Eligibility", "How to Apply"];
@@ -37,11 +68,11 @@ const HomeScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView>
         {/* Custom Header */}
         <CustomBackButton
-          title="Scehema Detail's"
+          title="Schema Detail's"
           showShare={true}
           showSave={true}
           onBackPress={handleBackPress}
@@ -79,23 +110,33 @@ const HomeScreen = () => {
             out—let's shape the future of design together!
           </Text>
 
-          {/* Horizontal Tabs */}
-          <HorizontalTabBar
-            data={categories}
-            activeTab={activeTab}
-            onTabPress={(tab) => setActiveTab(tab)}
-          />
+          <View
+            style={{
+              flex:1,
+              padding: normalize(10),
+              borderRadius: normalize(10),
+              backgroundColor: COLORS.WhiteColor,
+            }}
+          >
+            <HorizontalTabBar
+              data={categories}
+              activeTab={activeTab}
+              onTabPress={(tab) => setActiveTab(tab)}
+            />
 
-          {/* Content Repetition for Tab Example */}
-          <Text style={styles.description}>
-            Step into the world of innovation and creativity at our exclusive UI
-            design event! Whether you're a seasoned designer or just starting
-            out, this is your chance to explore cutting-edge tools, discover new
-            trends, and connect with industry experts. From interactive
-            workshops to inspiring talks, get ready to elevate your design game
-            and create user experiences that truly captivate. Don't miss
-            out—let's shape the future of design together!
-          </Text>
+            {/* Content Repetition for Tab Example */}
+            <Text style={styles.description}>
+              Step into the world of innovation and creativity at our exclusive
+              UI design event! Whether you're a seasoned designer or just
+              starting out, this is your chance to explore cutting-edge tools,
+              discover new trends, and connect with industry experts. From
+              interactive workshops to inspiring talks, get ready to elevate
+              your design game and create user experiences that truly captivate.
+              Don't miss out—let's shape the future of design together!
+            </Text>
+          </View>
+
+          {/* Horizontal Tabs */}
 
           {/* Eligibility Button */}
           <View style={styles.eligibilityButtonContainer}>
@@ -107,78 +148,79 @@ const HomeScreen = () => {
           </View>
         </View>
       </ScrollView>
-
-      {/* Floating Action Button */}
-      {/* <FabButton onPress={handleFabPress} /> */}
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F6F6F6",
-    paddingTop: Platform.OS === "android" ? 0 : 0,
-  },
-  contentContainer: {
-    padding: width * 0.05, // Adjust padding dynamically
+    backgroundColor: "#F9F9F9",
+    paddingTop: Platform.OS === "android" ? normalize(0) : normalize(0),
   },
   headerContainer: {
-    padding: width * 0.05,
+    padding: normalize(16),
     backgroundColor: "#F9F9F9",
     borderBottomWidth: 1,
     borderBottomColor: "#DDD",
   },
   headerTitle: {
-    fontSize: width * 0.045, // Adjust font size based on screen width
-    color: "#333",
+    fontFamily: 'Inter_400Regular',
+    fontSize: normalize(FONT_SIZE.medium),
+    color: COLORS.HeadingColor,
     fontWeight: "bold",
-    marginBottom: width * 0.02,
+    // marginBottom: normalize(8),
   },
   subHeaderTitle: {
-    fontSize: width * 0.05,
-    color: "#000",
+    fontFamily: 'Inter_400Regular',
+    fontSize: normalize(FONT_SIZE.large),
+    color: "#B48D3E",
     fontWeight: "bold",
-    marginBottom: width * 0.03,
+    marginBottom: normalize(12),
   },
   tagContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginTop: width * 0.02,
+    marginTop: normalize(8),
   },
   tag: {
-    backgroundColor: "#F2E6A7",
-    color: "#000",
-    fontSize: width * 0.035,
-    fontWeight: "500",
-    paddingVertical: width * 0.01,
-    paddingHorizontal: width * 0.03,
-    borderRadius: width * 0.02,
-    marginRight: width * 0.02,
-    marginBottom: width * 0.02,
+    fontFamily: 'Inter_400Regular',
+    backgroundColor: "#FEEDCA",
+    color: "#B48D3E",
+    fontSize: normalize(FONT_SIZE.ExtraSmall),
+    fontWeight: "700",
+    paddingVertical: normalize(5),
+    paddingHorizontal: normalize(8),
+    borderRadius: normalize(8),
+    marginRight: normalize(8),
+    marginBottom: normalize(5),
+  },
+  contentContainer: {
+    padding: normalize(16),
   },
   description: {
-    fontSize: width * 0.04,
-    color: "#444",
+    fontFamily: 'Inter_400Regular',
+    fontSize: normalize(FONT_SIZE.small),
+    color: COLORS.HeadingColor,
     textAlign: "justify",
-    lineHeight: width * 0.055,
-    marginBottom: width * 0.05, // Adjust bottom margin for spacing
+    lineHeight: normalize(21),
+    marginBottom: normalize(16),
   },
   eligibilityButtonContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: height * 0.05, // Adjust for larger screens
+    marginVertical: normalize(5),
   },
   eligibilityButton: {
     backgroundColor: "#B48D3E",
-    width: width * 0.9,
-    borderRadius: 5,
+    width: "90%",
+    borderRadius: normalize(8),
   },
   eligibilityButtonText: {
     color: "white",
     textAlign: "center",
-    padding: 10,
-    fontSize: 16,
+    padding: normalize(12),
+    fontSize: normalize(16),
     fontWeight: "500",
   },
 });

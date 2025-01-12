@@ -5,17 +5,52 @@ import {
   StyleSheet,
   ScrollView,
   Image,
-  TouchableOpacity,
-  Dimensions,
   Platform,
+  Dimensions,
+  PixelRatio,
 } from "react-native";
 import CustomBackButton from "@/components/ReusableComponent/CustomBackButton";
 import FabButton from "@/components/ReusableComponent/CustomFABButton";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { COLORS } from "@/assets/Constants/Colors";
+import { FONT_SIZE, InterFont, MuktaFont } from "@/assets/fonts/Constants";
+import { Stack } from "expo-router";
+import {
+  useFonts,
+  Inter_100Thin,
+  Inter_200ExtraLight,
+  Inter_300Light,
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  Inter_800ExtraBold,
+  Inter_900Black,
+} from '@expo-google-fonts/inter';
 
+// Get screen dimensions
 const { width, height } = Dimensions.get("window");
 
+// Normalize function for consistent scaling
+const normalize = (size: any) => {
+  const scale = width / 375; // Base design width is 375
+  return Math.round(PixelRatio.roundToNearestPixel(size * scale));
+};
+
+// Check if the device screen is large (e.g., foldable devices)
+const isLargeScreen = width > 600;
+
 const HomeScreen = () => {
+  let [fontsLoaded] = useFonts({
+    Inter_100Thin,
+    Inter_200ExtraLight,
+    Inter_300Light,
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+    Inter_800ExtraBold,
+    Inter_900Black,
+  });
   const handleBackPress = () => {
     console.log("Back button pressed");
   };
@@ -32,8 +67,61 @@ const HomeScreen = () => {
     console.log("FAB clicked!");
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: COLORS.BackGroundColor,
+      paddingTop: Platform.OS === "android" ? 0 : 0,
+    },
+    scrollContent: {
+      paddingBottom: normalize(16), // Add padding to the bottom to make space for FAB
+    },
+    contentContainer: {
+      padding: normalize(16), // Dynamic padding
+    },
+    topNewsHeader: {
+      fontFamily: 'Inter_400Regular',
+      color: "#F9453D",
+      fontSize: normalize(FONT_SIZE.medium), // Adjust font size
+      fontWeight: "bold",
+      marginBottom: normalize(5),
+    },
+    postedTime: {
+      fontFamily: 'Inter_400Regular',
+      fontSize: normalize(FONT_SIZE.ExtraSmall),
+      color: COLORS.GrayColor,
+    },
+    mainImage: {
+      width: "100%",
+      height: normalize(200), // Adjust height dynamically
+      borderRadius: normalize(8),
+      marginBottom: normalize(16),
+    },
+    mainTitle: {
+      fontFamily: 'Inter_400Regular',
+      fontSize: normalize(FONT_SIZE.large),
+      fontWeight: "bold",
+      color: COLORS.HeadingColor,
+      marginBottom: normalize(16),
+    },
+    mainContent: {
+      fontFamily: 'Inter_400Regular',
+      fontWeight:'400',
+      fontSize: normalize(FONT_SIZE.small),
+      color: COLORS.GrayColor,
+      lineHeight: normalize(20),
+      textAlign:'justify'
+    },
+    playerDetailsImage: {
+      flex: 1,
+      width: "100%",
+      borderRadius: normalize(30),
+      marginTop: normalize(5),
+    },
+  });
+
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Custom Header */}
         <CustomBackButton
@@ -48,19 +136,26 @@ const HomeScreen = () => {
         {/* Main Content */}
         <View style={styles.contentContainer}>
           {/* Top News Header */}
-          <Text style={styles.topNewsHeader}>TOP NEWS</Text>
-          <Text style={styles.postedTime}>24 hours ago posted</Text>
-
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text style={styles.topNewsHeader}>TOP NEWS</Text>
+            <Text style={styles.postedTime}>24 hours ago posted</Text>
+          </View>
+          <Text style={styles.mainTitle}>
+            Melbourne Test - Australia's playing-11 released: Sam Constas to
+            debut, Scott Boland to return; India may play without any change
+          </Text>
           {/* Main Image and News Content */}
           <Image
             source={require("../../assets/images/CricketrsImg.png")}
             style={styles.mainImage}
             resizeMode="cover"
           />
-          <Text style={styles.mainTitle}>
-            Melbourne Test - Australia's playing-11 released: Sam Constas to
-            debut, Scott Boland to return; India may play without any change
-          </Text>
           <Text style={styles.mainContent}>
             The fourth match of the Border Gavaskar Trophy between India and
             Australia will be played at the Melbourne Stadium from tomorrow (26
@@ -88,57 +183,8 @@ const HomeScreen = () => {
 
       {/* Floating Action Button */}
       <FabButton onPress={handleFabPress} />
-    </SafeAreaView>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F6F6F6",
-    paddingTop: Platform.OS === "android" ? 0 : 0,
-  },
-  scrollContent: {
-    paddingBottom: width * 0.05, // Add padding to the bottom to make space for FAB
-  },
-  contentContainer: {
-    padding: width * 0.04, // 4% padding of screen width
-  },
-  topNewsHeader: {
-    color: "#F9453D",
-    fontSize: width * 0.045, // Adjust font size based on screen width
-    fontWeight: "bold",
-    marginBottom: width * 0.02,
-  },
-  postedTime: {
-    fontSize: width * 0.035, // Responsive font size
-    color: "#777",
-    marginBottom: width * 0.04,
-  },
-  mainImage: {
-    width: "100%",
-    height: width * 0.5, // Adjust height dynamically based on screen width
-    borderRadius: 10,
-    marginBottom: width * 0.04,
-  },
-  mainTitle: {
-    fontSize: width * 0.05, // Adjust font size based on screen width
-    fontWeight: "bold",
-    color: "#000",
-    marginBottom: width * 0.02,
-  },
-  mainContent: {
-    fontSize: width * 0.035, // Responsive font size
-    color: "#333",
-    lineHeight: width * 0.05, // Adjust line height dynamically
-    marginBottom: width * 0.04,
-  },
-  playerDetailsImage: {
-    flex: 1,
-    width: "100%",
-    borderRadius: 20,
-    marginTop: width * 0.04,
-  },
-});
 
 export default HomeScreen;

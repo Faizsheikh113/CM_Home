@@ -1,7 +1,14 @@
 import React from "react";
-import { View, Image, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { View, Image, TouchableOpacity, StyleSheet, Dimensions, PixelRatio } from "react-native";
 
+// Get screen dimensions for responsive scaling
 const { width, height } = Dimensions.get("window");
+
+// Normalize function for consistent scaling
+const normalize = (size: number) => {
+  const scale = width / 375; // Base design width is 375
+  return Math.round(PixelRatio.roundToNearestPixel(size * scale));
+};
 
 const FabButton = ({ onPress }: { onPress?: () => void }) => {
   const handlePress = () => {
@@ -27,18 +34,18 @@ const styles = StyleSheet.create({
   floatingButton: {
     position: "absolute",
     backgroundColor: "#F9453D",
-    right: width * 0.05, // 5% from the right edge
-    bottom: height * 0.05, // 5% from the bottom edge
-    borderRadius: width * 0.15, // Ensure the button stays circular
-    width: width * 0.15, // Dynamic width
-    height: width * 0.15, // Dynamic height to maintain a square
+    right: normalize(16), // Margin from the right edge
+    bottom: normalize(16), // Margin from the bottom edge
+    borderRadius: normalize(28), // Circular button
+    width: normalize(56), // Dynamic width
+    height: normalize(56), // Dynamic height to maintain a square
     justifyContent: "center",
     alignItems: "center",
     elevation: 5, // Shadow for Android
     shadowColor: "#000", // Shadow for iOS
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
-    shadowRadius: 5,
+    shadowRadius: normalize(5),
   },
   fabImage: {
     width: "60%", // Image size relative to the button

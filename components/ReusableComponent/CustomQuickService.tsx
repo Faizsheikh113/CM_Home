@@ -1,10 +1,50 @@
+import { COLORS } from "@/assets/Constants/Colors";
+import { FONT_SIZE, InterFont } from "@/assets/fonts/Constants";
 import React from "react";
-import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  Dimensions,
+  PixelRatio,
+} from "react-native";
+import {
+  useFonts,
+  Inter_100Thin,
+  Inter_200ExtraLight,
+  Inter_300Light,
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  Inter_800ExtraBold,
+  Inter_900Black,
+} from '@expo-google-fonts/inter';
 
-const { width: screenWidth } = Dimensions.get("window");
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
+// Normalize function for consistent scaling
+const normalize = (size: number) => {
+  const scale = SCREEN_WIDTH / 375; // Base design width is 375 (for reference)
+  return Math.round(PixelRatio.roundToNearestPixel(size * scale));
+};
+
+// Component
 const QuickServices: React.FC = () => {
-  // Local Data for Quick Services
+  let [fontsLoaded] = useFonts({
+    Inter_100Thin,
+    Inter_200ExtraLight,
+    Inter_300Light,
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+    Inter_800ExtraBold,
+    Inter_900Black,
+  });
   const quickServices = [
     {
       id: 1,
@@ -32,12 +72,8 @@ const QuickServices: React.FC = () => {
     },
   ];
 
-  const handleServicePress = (service: any) => {
-    alert(`You pressed on ${service.name}`);
-  };
-
   const renderQuickServiceItem = ({ item }: any) => (
-    <TouchableOpacity style={styles.serviceItem} onPress={() => handleServicePress(item)}>
+    <TouchableOpacity style={styles.serviceItem}>
       <Image style={styles.serviceIcon} source={item.icon} />
       <Text style={styles.serviceName}>{item.name}</Text>
       <Text style={styles.serviceDescription}>{item.description}</Text>
@@ -49,7 +85,7 @@ const QuickServices: React.FC = () => {
       <FlatList
         data={quickServices}
         renderItem={renderQuickServiceItem}
-        numColumns={2}
+        numColumns={2}  // Always use 2 columns
         keyExtractor={(item) => item.id.toString()}
         columnWrapperStyle={styles.serviceRow}
         showsVerticalScrollIndicator={false}
@@ -62,40 +98,45 @@ export default QuickServices;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: screenWidth * 0.04, // Dynamic padding
-    paddingVertical: screenWidth * 0.02,
+    flex: 1,
+    paddingHorizontal: normalize(16),
+    paddingTop: normalize(10),
   },
   serviceRow: {
     justifyContent: "space-between",
-    marginBottom: screenWidth * 0.03, // Dynamic spacing between rows
+    marginBottom: normalize(15),
   },
   serviceItem: {
     backgroundColor: "#FFF",
-    borderRadius: screenWidth * 0.03, // Dynamic border radius
-    padding: screenWidth * 0.04, // Dynamic padding
+    borderRadius: normalize(12),
     alignItems: "center",
-    width: screenWidth * 0.42, // Adjusted width for better responsiveness
+    justifyContent: "center",
+    width: (SCREEN_WIDTH - normalize(48)) / 2, // Fixed 2-column layout, ensuring the width is consistent across devices
+    height: SCREEN_HEIGHT * 0.2, // Proportional height based on screen size to maintain a consistent look
+    padding: normalize(10),
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 5, // Android shadow
+    elevation: 3,
   },
   serviceIcon: {
-    width: screenWidth * 0.15, // Dynamic size for icons
-    height: screenWidth * 0.15,
-    marginBottom: screenWidth * 0.02, // Dynamic margin
+    width: normalize(50),  // Scalable icon size
+    height: normalize(50), // Scalable icon size
     resizeMode: "contain",
+    marginBottom: normalize(8),
   },
   serviceName: {
-    fontSize: screenWidth * 0.045, // Dynamic font size
+    fontFamily: 'Inter_400Regular',
+    fontSize: normalize(FONT_SIZE.medium), // Responsive font size for name
     fontWeight: "bold",
-    color: "#333",
+    color: COLORS.HeadingColor,
   },
   serviceDescription: {
-    fontSize: screenWidth * 0.035, // Dynamic font size for description
-    color: "#666",
+    fontFamily: 'Inter_400Regular',
+    fontSize: normalize(FONT_SIZE.small), // Responsive font size for description
+    color: COLORS.GrayColor,
     textAlign: "center",
-    marginTop: screenWidth * 0.02, // Dynamic margin
+    marginTop: normalize(5),
   },
 });

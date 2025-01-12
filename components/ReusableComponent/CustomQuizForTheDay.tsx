@@ -1,7 +1,35 @@
+import { COLORS } from "@/assets/Constants/Colors";
+import { FONT_SIZE, InterFont } from "@/assets/fonts/Constants";
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+  PixelRatio,
+} from "react-native";
+import {
+  useFonts,
+  Inter_100Thin,
+  Inter_200ExtraLight,
+  Inter_300Light,
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  Inter_800ExtraBold,
+  Inter_900Black,
+} from '@expo-google-fonts/inter';
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
+
+// Normalize function for consistent scaling
+const normalize = (size: number) => {
+  const scale = SCREEN_WIDTH / 375; // Base design width is 375 (for reference)
+  return Math.round(PixelRatio.roundToNearestPixel(size * scale));
+};
 
 interface QuizCardProps {
   title: string;
@@ -20,6 +48,17 @@ const QuizCard: React.FC<QuizCardProps> = ({
   thumbnail,
   onParticipate,
 }) => {
+  let [fontsLoaded] = useFonts({
+    Inter_100Thin,
+    Inter_200ExtraLight,
+    Inter_300Light,
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+    Inter_800ExtraBold,
+    Inter_900Black,
+  });
   return (
     <View style={styles.outercontainer}>
       <View style={styles.container}>
@@ -27,59 +66,106 @@ const QuizCard: React.FC<QuizCardProps> = ({
         <View style={styles.content}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.details}>LAST DATE {lastDate}</Text>
-          <Text style={styles.details}>
-            {questionCount} Questions • {duration / 60} Min
-          </Text>
-          <TouchableOpacity style={styles.button} onPress={onParticipate}>
-            <Text style={styles.buttonText}>Participate Now</Text>
-          </TouchableOpacity>
+          <View style={styles.detailsContainer}>
+            <View style={styles.Questioncontainer}>
+              <Image
+                source={require("../../assets/images/fe_question.png")}
+                style={styles.QueImage}
+              />
+              <View style={styles.contentGap}>
+                <Text>{questionCount}</Text>
+                <Text style={styles.detailsTime}>Questions</Text>
+              </View>
+            </View>
+            <View style={styles.Questioncontainer}>
+              <Image
+                source={require("../../assets/images/fe_question.png")}
+                style={styles.QueImage}
+              />
+              <View style={styles.contentGap}>
+                <Text>{duration}</Text>
+                <Text style={styles.detailsTime}>Duration</Text>
+              </View>
+            </View>
+          </View>
         </View>
       </View>
+      <TouchableOpacity style={styles.button} onPress={onParticipate}>
+        <Text style={styles.buttonText}>Participate Now</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   outercontainer: {
-    paddingHorizontal: screenWidth * 0.04, // Dynamic padding based on screen size
-    paddingVertical: screenHeight * 0.02,
+    paddingHorizontal: normalize(16), // Dynamic padding based on screen size
+    paddingVertical: normalize(10),
   },
   container: {
+    flex: 1,
+    flexDirection: "row",
     backgroundColor: "#FFF",
-    borderRadius: screenWidth * 0.03, // Dynamic border radius
-    marginBottom: screenHeight * 0.02, // Dynamic margin based on screen size
+    borderRadius: normalize(12),
+    marginBottom: normalize(15),
     overflow: "hidden",
-    elevation: 3, // Elevation for shadow on Android
+    elevation: 3,
+  },
+  Questioncontainer: {
+    flexDirection: "row",
+    backgroundColor: "#FFF",
   },
   thumbnail: {
-    width: "100%",
-    height: screenHeight * 0.2, // Dynamic height for the thumbnail
+    flex: 1,
+    width: normalize(105), // Dynamic width based on screen size
+    height: normalize(105), // Dynamic height based on screen size
+    resizeMode: "cover",
+  },
+  QueImage: {
+    width: normalize(24),
+    height: normalize(24),
   },
   content: {
-    padding: screenWidth * 0.04, // Dynamic padding for content
+    padding: normalize(16), // Dynamic padding for content
+  },
+  contentGap: {
+    paddingLeft: normalize(8), // Dynamic padding for content
   },
   title: {
-    fontSize: screenWidth * 0.045, // Dynamic font size
+    fontFamily:'Inter_400Regular',
+    fontSize: normalize(FONT_SIZE.medium), // Dynamic font size
     fontWeight: "bold",
-    color: "#333",
+    color: COLORS.HeadingColor,
   },
   details: {
-    fontSize: screenWidth * 0.035, // Dynamic font size for details
-    color: "#777",
-    marginTop: screenHeight * 0.01, // Dynamic margin for spacing
+    fontFamily:'Inter_400Regular',
+    fontSize: normalize(FONT_SIZE.small), // Dynamic font size for details
+    color: "#3DABF9",
+    fontWeight: "600",
+  },
+  detailsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: normalize(5), // Dynamic marginTop
+  },
+  detailsTime: {
+    fontFamily:'Inter_400Regular',
+    fontSize: normalize(FONT_SIZE.small), // Dynamic font size for details
+    color: COLORS.GrayColor,
+    fontWeight: "600",
   },
   button: {
-    marginTop: screenHeight * 0.015, // Dynamic margin for button
-    paddingVertical: screenHeight * 0.015, // Dynamic padding for button
-    borderRadius: screenWidth * 0.025, // Dynamic border radius
+    paddingVertical: normalize(8), // Dynamic padding for button
+    borderRadius: normalize(12), // Dynamic border radius
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#B89449",
   },
   buttonText: {
+    fontFamily:'Inter_400Regular',
     color: "#B89449",
     fontWeight: "bold",
-    fontSize: screenWidth * 0.04, // Dynamic font size for button text
+    fontSize: normalize(FONT_SIZE.small), // Dynamic font size for button text
   },
 });
 

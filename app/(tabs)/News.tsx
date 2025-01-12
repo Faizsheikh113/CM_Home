@@ -6,6 +6,9 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Dimensions,
+  PixelRatio,
+  Platform,
 } from "react-native";
 import Header from "@/components/ReusableComponent/CustomHeader";
 import CustomSearchBar from "@/components/ReusableComponent/CustomSearchBar";
@@ -17,7 +20,17 @@ import RowListButtonReusable, {
 } from "@/components/ReusableComponent/CustomReusableSchema";
 import LocalImage from "../../assets/images/ScheamPageImage.png";
 import { useNavigation } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { COLORS } from "@/assets/Constants/Colors";
+import { FONT_SIZE } from "@/assets/fonts/Constants";
+
+// Get screen dimensions for responsive design
+const { width, height } = Dimensions.get("window");
+
+// Normalize function for consistent scaling
+const normalize = (size: number) => {
+  const scale = width / 375; // Base design width is 375 (for reference)
+  return Math.round(PixelRatio.roundToNearestPixel(size * scale));
+};
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -89,7 +102,7 @@ const HomeScreen = () => {
       <TouchableOpacity style={styles.listItem} onPress={onPress}>
         <Image source={imageSource} style={styles.listIcon} />
         <View style={styles.listTextContainer}>
-          <Text style={styles.listTitle}>{title}</Text>
+          <Text style={styles.title}>{title}</Text>
           <Text style={styles.listSubtitle}>{subtitle}</Text>
         </View>
       </TouchableOpacity>
@@ -107,13 +120,12 @@ const HomeScreen = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView>
         {/* Header */}
         <Header
           buttonLabel="Man ki Baat"
           profileImageUrl="https://via.placeholder.com/40x40"
-          languageText="HI | अ"
           onButtonPress={() => alert("Man ki Baat pressed!")}
           onProfilePress={() => alert("Profile pressed!")}
         />
@@ -164,60 +176,59 @@ const HomeScreen = () => {
         {/* Floating Action Button */}
       </ScrollView>
       <FabButton onPress={handleFabPress} />
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: COLORS.BackGroundColor,
+    paddingTop: Platform.OS === "android" ? 0 : 0,
   },
   sectionHeaderContainer: {
-    marginVertical: "2%",
+    marginTop: normalize(8),
+    marginBottom: normalize(5),
   },
   textWrapper: {},
   title: {
-    fontSize: 14,
-    fontWeight: "bold",
+    fontSize: normalize(FONT_SIZE.small),
+    fontWeight: "700",
     color: "#F9453D",
-    padding: 5,
   },
   subtitle: {
-    fontSize: 12,
-    fontWeight: "500",
-    color: "black",
-    marginTop: 5,
-    padding: 5,
+    fontSize: normalize(FONT_SIZE.medium),
+    fontWeight: "600",
+    color: COLORS.HeadingColor,
   },
   listItem: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    marginVertical: 5,
+    backgroundColor: COLORS.WhiteColor,
+    borderRadius: normalize(10),
+    marginVertical: normalize(5),
     elevation: 1,
   },
   listIcon: {
-    width: 80,
-    height: 80,
-    marginRight: 12,
-    borderRadius: 5,
+    width: normalize(100),
+    height: normalize(100),
+    marginRight: normalize(12),
+    borderRadius: normalize(10),
     backgroundColor: "red",
   },
   listTextContainer: {
+    padding: normalize(10),
     flex: 1,
-    padding: 10,
   },
   listTitle: {
-    fontSize: 16,
+    fontSize: normalize(FONT_SIZE.medium),
     fontWeight: "600",
-    color: "#000",
+    color: COLORS.HeadingColor,
   },
   listSubtitle: {
-    fontSize: 14,
-    color: "#666",
-    marginTop: 4,
+    fontSize: normalize(FONT_SIZE.medium),
+    color: COLORS.HeadingColor,
+    marginTop: normalize(4),
   },
 });
 
