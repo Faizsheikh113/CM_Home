@@ -92,8 +92,6 @@ const Header: React.FC<HeaderProps> = ({
     button: {
       backgroundColor: "#B89449",
       borderRadius: normalize(20),
-      // width: getButtonWidth(), // Dynamic button width
-      // height: normalize(35),
       borderBottomLeftRadius: 0,
       justifyContent: "flex-start",
       alignItems: "center",
