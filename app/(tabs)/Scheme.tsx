@@ -31,6 +31,8 @@ import LocalImage from "../../assets/images/ScheamPageImage.png";
 import HorizontalTabBar from "@/components/ReusableComponent/customHorizontalBar";
 import { COLORS } from "@/assets/Constants/Colors";
 import { FONT_SIZE, InterFont } from "@/assets/fonts/Constants";
+import { router } from "expo-router";
+// import { normalize } from "../../assets/Constants/Responsive";
 
 // Get screen dimensions for responsive design
 const { width, height } = Dimensions.get("window");
@@ -46,9 +48,9 @@ export default function HomeScreen() {
   const [activeTab, setActiveTab] = useState("Categories");
 
   const data = [
-    { id: "1", image: "https://via.placeholder.com/350x150" },
-    { id: "2", image: "https://via.placeholder.com/350x150" },
-    { id: "3", image: "https://via.placeholder.com/350x150" },
+    { id: "1", image: require("../../assets/images/SchemaSchollarImage.png") },
+    { id: "2", image: require("../../assets/images/SchemaSchollarImage.png") },
+    { id: "3", image: require("../../assets/images/SchemaSchollarImage.png") },
   ];
 
   const categories = ["Categories", "State", "Central Ministeries"];
@@ -105,7 +107,7 @@ export default function HomeScreen() {
 
     const renderItem = ({ item }: any) => (
       <View style={styles.card}>
-        <Image source={{ uri: item.image }} style={styles.image} />
+        <Image source={item.image} style={styles.image} />
       </View>
     );
 
@@ -139,7 +141,10 @@ export default function HomeScreen() {
               imageUri={`http://13.48.43.231/api/uploads/images/scheme/${item.images[0]}`}
               title={item.schemeTitle}
               subtitle={item.schemeDetails}
-              onPress={() => console.log(`${item.schemeTitle} pressed`)}
+              onPress={() => {
+                console.log(`${item.schemeTitle} ${item?.id} pressed`);
+                router.push(`/(tabs)/explore?id=${item?.id}` as any);
+              }}
             />
           )}
         />
@@ -161,7 +166,10 @@ export default function HomeScreen() {
               imageUri={`http://13.48.43.231/api/uploads/images/scheme/${item.images[0]}`}
               title={item.schemeTitle}
               subtitle={item.schemeDetails}
-              onPress={() => console.log(`${item.schemeTitle} pressed`)}
+              onPress={() => {
+                console.log(`${item.schemeTitle}${item.id} pressed`);
+                router.push(`/(tabs)/explore?id=${item?.id}` as any);
+              }}
             />
           )}
         />
@@ -176,7 +184,6 @@ export default function HomeScreen() {
         <Header
           buttonLabel="Man ki Baat"
           profileImageUrl="https://via.placeholder.com/40x40"
-          languageText="HI | अ"
           onButtonPress={() => alert("Man ki Baat pressed!")}
           onProfilePress={() => alert("Profile pressed!")}
         />
@@ -234,6 +241,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.WhiteColor,
     borderRadius: normalize(10),
     padding: normalize(16),
+    paddingHorizontal: normalize(16),
     marginBottom: normalize(8),
     elevation: 1,
   },
@@ -266,6 +274,7 @@ const styles = StyleSheet.create({
   },
   listTextContainer: {
     flex: 1,
+    paddingHorizontal: normalize(10),
   },
   listTitle: {
     fontSize: normalize(FONT_SIZE.medium),
@@ -295,7 +304,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.WhiteColor,
   },
   image: {
+    // flex:1,
     width: "100%",
     height: height * 0.15,
+    resizeMode:'stretch'
   },
 });

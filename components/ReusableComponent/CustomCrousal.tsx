@@ -15,19 +15,19 @@ const data = [
     id: "1",
     title: "Ladli Behna Yojna",
     description: "This month, get up to ₹1250",
-    image: "https://via.placeholder.com/350x150",
+    image: require("../../assets/images/CrousalImage.png"),
   },
   {
     id: "2",
     title: "Health Initiative",
     description: "Get free health checkups nearby",
-    image: "https://via.placeholder.com/350x151",
+    image: require("../../assets/images/CrousalImage.png"),
   },
   {
     id: "3",
     title: "Education Campaign",
     description: "Empower yourself with knowledge",
-    image: "https://via.placeholder.com/350x152",
+    image: require("../../assets/images/CrousalImage.png"),
   },
 ];
 
@@ -61,7 +61,7 @@ const CustomCarousel = () => {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.card}>
-      <Image source={{ uri: item.image }} style={styles.image} />
+      <Image source={item.image} style={styles.image}  />
       {/* <View style={styles.textContainer}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.description}>{item.description}</Text>
@@ -116,8 +116,8 @@ const styles = StyleSheet.create({
     height: (231 / 812) * height,
   },
   image: {
-    width: "100%",
-    height: (231 / 812) * height,
+    // width: "100%",
+    // height: (231 / 812) * height,
     resizeMode: "cover",
   },
   textContainer: {

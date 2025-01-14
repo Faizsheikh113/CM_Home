@@ -104,11 +104,6 @@ const RowListButtonReusable = ({
         <SectionHeader
           title={sectionTitle}
           onExplorePress={onExplorePress}
-          customStyles={{
-            sectionHeaderStyle,
-            sectionTitleStyle,
-            exploreTextStyle,
-          }}
         />
       )}
 
@@ -126,8 +121,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f8f8f8",
-    paddingHorizontal: normalize(16),
-    paddingVertical: normalize(10),
+    paddingHorizontal: normalize(10),
+    paddingVertical: normalize(5),
     borderRadius: normalize(12),
   },
   sectionHeader: {
@@ -135,7 +130,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginVertical: normalize(8),
-    paddingHorizontal: normalize(20),
+    paddingHorizontal: normalize(15),
   },
   sectionTitle: {
     fontFamily: 'Inter_400Regular',

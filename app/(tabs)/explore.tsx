@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import CustomBackButton from "@/components/ReusableComponent/CustomBackButton";
 import FabButton from "@/components/ReusableComponent/CustomFABButton";
@@ -25,10 +26,12 @@ import {
   Inter_700Bold,
   Inter_800ExtraBold,
   Inter_900Black,
-} from '@expo-google-fonts/inter';
+} from "@expo-google-fonts/inter";
+import { useSearchParams } from "expo-router/build/hooks";
+import axios from "axios";
 
 // Get screen dimensions
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 // Normalize function for consistent scaling
 const normalize = (size: number) => {
@@ -48,31 +51,64 @@ const HomeScreen = () => {
     Inter_800ExtraBold,
     Inter_900Black,
   });
+
   const [activeTab, setActiveTab] = useState("Details");
+  const [schemeData, setSchemeData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [searchParams] = useSearchParams();
+
+  const Id = Number(searchParams[1]);
+  console.log("Received ID:", Id);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `http://16.171.21.224:4000/api/scheme/${Id}`
+        );
+        setSchemeData(response.data);
+        setError(null);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to fetch scheme details.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [Id]);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={COLORS.HeadingColor} />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
 
   const categories = ["Details", "Benefits", "Eligibility", "How to Apply"];
-  const handleBackPress = () => {
-    console.log("Back button pressed");
-  };
-
-  const handleSharePress = () => {
-    console.log("Share button pressed");
-  };
-
-  const handleSavePress = () => {
-    console.log("Save button pressed");
-  };
-
-  const handleFabPress = () => {
-    console.log("FAB clicked!");
-  };
+  const handleBackPress = () => console.log("Back button pressed");
+  const handleSharePress = () => console.log("Share button pressed");
+  const handleSavePress = () => console.log("Save button pressed");
+  const handleFabPress = () => console.log("FAB clicked!");
 
   return (
     <View style={styles.container}>
       <ScrollView>
         {/* Custom Header */}
         <CustomBackButton
-          title="Schema Detail's"
+          title={schemeData?.schemeTitle || "Schema Detail's"}
           showShare={true}
           showSave={true}
           onBackPress={handleBackPress}
@@ -86,33 +122,29 @@ const HomeScreen = () => {
             Ministry of Housing & Urban Affairs
           </Text>
           <Text style={styles.subHeaderTitle}>
-            Pradhan Mantri Awas Yojana-Urban
+            {schemeData?.schemeTitle || "Scheme Details"}
           </Text>
 
           {/* Tags Section */}
           <View style={styles.tagContainer}>
-            <Text style={styles.tag}>HOUSING</Text>
-            <Text style={styles.tag}>URBAN</Text>
-            <Text style={styles.tag}>REHABILITATION</Text>
-            <Text style={styles.tag}>LOAN</Text>
+            {schemeData?.city &&
+              JSON.parse(schemeData.city).map((tag) => (
+                <Text key={tag.id} style={styles.tag}>
+                  {tag.name.toUpperCase()}
+                </Text>
+              ))}
           </View>
         </View>
 
         {/* Content Section */}
         <View style={styles.contentContainer}>
           <Text style={styles.description}>
-            Step into the world of innovation and creativity at our exclusive UI
-            design event! Whether you're a seasoned designer or just starting
-            out, this is your chance to explore cutting-edge tools, discover new
-            trends, and connect with industry experts. From interactive
-            workshops to inspiring talks, get ready to elevate your design game
-            and create user experiences that truly captivate. Don't miss
-            out—let's shape the future of design together!
+            {schemeData?.schemeDetails || "No details available."}
           </Text>
 
           <View
             style={{
-              flex:1,
+              flex: 1,
               padding: normalize(10),
               borderRadius: normalize(10),
               backgroundColor: COLORS.WhiteColor,
@@ -124,19 +156,13 @@ const HomeScreen = () => {
               onTabPress={(tab) => setActiveTab(tab)}
             />
 
-            {/* Content Repetition for Tab Example */}
+            {/* Content based on active tab */}
             <Text style={styles.description}>
-              Step into the world of innovation and creativity at our exclusive
-              UI design event! Whether you're a seasoned designer or just
-              starting out, this is your chance to explore cutting-edge tools,
-              discover new trends, and connect with industry experts. From
-              interactive workshops to inspiring talks, get ready to elevate
-              your design game and create user experiences that truly captivate.
-              Don't miss out—let's shape the future of design together!
+              {activeTab === "Details"
+                ? schemeData?.schemeDetails
+                : `Content for ${activeTab}`}
             </Text>
           </View>
-
-          {/* Horizontal Tabs */}
 
           {/* Eligibility Button */}
           <View style={styles.eligibilityButtonContainer}>
@@ -154,9 +180,23 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: "#F9F9F9",
     paddingTop: Platform.OS === "android" ? normalize(0) : normalize(0),
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorText: {
+    color: "red",
+    fontSize: normalize(16),
   },
   headerContainer: {
     padding: normalize(16),
@@ -165,14 +205,13 @@ const styles = StyleSheet.create({
     borderBottomColor: "#DDD",
   },
   headerTitle: {
-    fontFamily: 'Inter_400Regular',
+    fontFamily: "Inter_400Regular",
     fontSize: normalize(FONT_SIZE.medium),
     color: COLORS.HeadingColor,
     fontWeight: "bold",
-    // marginBottom: normalize(8),
   },
   subHeaderTitle: {
-    fontFamily: 'Inter_400Regular',
+    fontFamily: "Inter_400Regular",
     fontSize: normalize(FONT_SIZE.large),
     color: "#B48D3E",
     fontWeight: "bold",
@@ -184,7 +223,7 @@ const styles = StyleSheet.create({
     marginTop: normalize(8),
   },
   tag: {
-    fontFamily: 'Inter_400Regular',
+    fontFamily: "Inter_400Regular",
     backgroundColor: "#FEEDCA",
     color: "#B48D3E",
     fontSize: normalize(FONT_SIZE.ExtraSmall),
@@ -199,7 +238,7 @@ const styles = StyleSheet.create({
     padding: normalize(16),
   },
   description: {
-    fontFamily: 'Inter_400Regular',
+    fontFamily: "Inter_400Regular",
     fontSize: normalize(FONT_SIZE.small),
     color: COLORS.HeadingColor,
     textAlign: "justify",

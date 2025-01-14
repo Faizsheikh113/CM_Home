@@ -21,7 +21,7 @@ import {
   Inter_700Bold,
   Inter_800ExtraBold,
   Inter_900Black,
-} from '@expo-google-fonts/inter';
+} from "@expo-google-fonts/inter";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -62,7 +62,13 @@ const QuizCard: React.FC<QuizCardProps> = ({
   return (
     <View style={styles.outercontainer}>
       <View style={styles.container}>
-        <Image source={{ uri: thumbnail }} style={styles.thumbnail} />
+        <Image
+          source={require("../../assets/images/QuizImage.png")}
+          style={styles.thumbnail}
+          height={normalize(105)}
+          width={normalize(205)}
+          resizeMode="contain"
+        />
         <View style={styles.content}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.details}>LAST DATE {lastDate}</Text>
@@ -84,7 +90,13 @@ const QuizCard: React.FC<QuizCardProps> = ({
               />
               <View style={styles.contentGap}>
                 <Text>{duration}</Text>
-                <Text style={styles.detailsTime}>Duration</Text>
+                <Text
+                  style={styles.detailsTime}
+                  numberOfLines={2}
+                  lineBreakMode="tail"
+                >
+                  Durations
+                </Text>
               </View>
             </View>
           </View>
@@ -116,29 +128,31 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
   },
   thumbnail: {
-    flex: 1,
-    width: normalize(105), // Dynamic width based on screen size
-    height: normalize(105), // Dynamic height based on screen size
-    resizeMode: "cover",
+    // flex: 1,
+    // width: normalize(105), // Dynamic width based on screen size
+    // height: normalize(125), // Dynamic height based on screen size
+    alignSelf:'center'
   },
   QueImage: {
     width: normalize(24),
     height: normalize(24),
   },
   content: {
-    padding: normalize(16), // Dynamic padding for content
+    padding: normalize(10),
+    paddingHorizontal:normalize(10) // Dynamic padding for content
   },
   contentGap: {
     paddingLeft: normalize(8), // Dynamic padding for content
   },
   title: {
-    fontFamily:'Inter_400Regular',
+    // paddingHorizontal:normalize(10) ,// Dynamic padding for content
+    fontFamily: "Inter_400Regular",
     fontSize: normalize(FONT_SIZE.medium), // Dynamic font size
     fontWeight: "bold",
     color: COLORS.HeadingColor,
   },
   details: {
-    fontFamily:'Inter_400Regular',
+    fontFamily: "Inter_400Regular",
     fontSize: normalize(FONT_SIZE.small), // Dynamic font size for details
     color: "#3DABF9",
     fontWeight: "600",
@@ -146,13 +160,15 @@ const styles = StyleSheet.create({
   detailsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: normalize(5), // Dynamic marginTop
+    // marginTop: normalize(5), // Dynamic marginTop
+    padding: normalize(2),
   },
   detailsTime: {
-    fontFamily:'Inter_400Regular',
+    fontFamily: "Inter_400Regular",
     fontSize: normalize(FONT_SIZE.small), // Dynamic font size for details
     color: COLORS.GrayColor,
     fontWeight: "600",
+    width: normalize(70),
   },
   button: {
     paddingVertical: normalize(8), // Dynamic padding for button
@@ -162,7 +178,7 @@ const styles = StyleSheet.create({
     borderColor: "#B89449",
   },
   buttonText: {
-    fontFamily:'Inter_400Regular',
+    fontFamily: "Inter_400Regular",
     color: "#B89449",
     fontWeight: "bold",
     fontSize: normalize(FONT_SIZE.small), // Dynamic font size for button text

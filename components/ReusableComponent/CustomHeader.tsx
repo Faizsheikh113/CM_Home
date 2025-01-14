@@ -24,6 +24,8 @@ import {
   Inter_800ExtraBold,
   Inter_900Black,
 } from "@expo-google-fonts/inter";
+import { Ionicons } from "@expo/vector-icons";
+import { COLORS } from "@/assets/Constants/Colors";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -90,6 +92,7 @@ const Header: React.FC<HeaderProps> = ({
       resizeMode: "contain",
     },
     button: {
+      flexDirection:'row',
       backgroundColor: "#B89449",
       borderRadius: normalize(20),
       borderBottomLeftRadius: 0,
@@ -98,9 +101,10 @@ const Header: React.FC<HeaderProps> = ({
       borderColor: "#DFAF4D",
       borderWidth: 2,
       padding: normalize(5),
-      marginHorizontal: 10,
+      marginHorizontal: 15,
     },
     buttonText: {
+      paddingHorizontal: 13,
       fontFamily: "Inter_400Regular",
       color: "#FFF",
       fontWeight: "600",
@@ -154,6 +158,7 @@ const Header: React.FC<HeaderProps> = ({
           {/* Button */}
           <TouchableOpacity onPress={onButtonPress} style={styles.button}>
             <Text style={styles.buttonText}>{buttonLabel}</Text>
+            <Ionicons name="chevron-forward" size={20} color={COLORS.WhiteColor}/>
           </TouchableOpacity>
         </View>
 
