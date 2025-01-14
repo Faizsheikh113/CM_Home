@@ -73,6 +73,7 @@ export default function TabLayout() {
         name="Scheme"
         options={{
           title: "Scheme",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Image
               source={require("../../assets/images/paper.png")}
@@ -268,4 +269,3 @@ export default function TabLayout() {
 //     </NavigationContainer>
 //   );
 // }
-

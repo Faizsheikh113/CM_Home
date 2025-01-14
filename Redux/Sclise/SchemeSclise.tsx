@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 // Async thunk for fetching schemes
 export const fetchSchemes = createAsyncThunk("schemes/fetch", async () => {
-  const response = await axios.get("http://16.171.21.224:4000/api/scheme");
+  const response = await axios.get("http://13.49.189.177:4000/api/scheme");
   console.log(response.data);
   return response.data;
 });

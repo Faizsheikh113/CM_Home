@@ -143,7 +143,7 @@ export default function HomeScreen() {
               subtitle={item.schemeDetails}
               onPress={() => {
                 console.log(`${item.schemeTitle} ${item?.id} pressed`);
-                router.push(`/(tabs)/explore?id=${item?.id}` as any);
+                router.push(`/Screens/SchemaDetail?id=${item?.id}` as any);
               }}
             />
           )}
@@ -168,7 +168,8 @@ export default function HomeScreen() {
               subtitle={item.schemeDetails}
               onPress={() => {
                 console.log(`${item.schemeTitle}${item.id} pressed`);
-                router.push(`/(tabs)/explore?id=${item?.id}` as any);
+                // router.push(`/(tabs)/explore?id=${item?.id}` as any);
+                router.push(`/Screens/SchemaDetail?id=${item?.id}` as any);
               }}
             />
           )}
