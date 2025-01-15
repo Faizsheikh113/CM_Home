@@ -40,7 +40,7 @@ const normalize = (size: number) => {
   return Math.round(size * scale);
 };
 export const options = {
-    headerShown: false, // Turn off header
+    headerShown: false, 
   };
 
 const HomeScreen = () => {
@@ -267,5 +267,8 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
 });
+export const screenOptions = {
+  headerShown: false,
+};
 
 export default HomeScreen;
