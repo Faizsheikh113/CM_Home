@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Hum_App",
-    "slug": "humapp-7vqdpgruxf1qr15bsdsas",
+    "slug": "humapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -52,9 +52,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "b2e097c7-13a7-473e-b10d-fd7c589c0edd"
+        "projectId": "db0c4713-af19-4919-b8b6-e4e5ff76bb9a"
       }
     },
-    "owner": "faizsheikh"
+    "owner": "gopaljupitech"
   }
 }
