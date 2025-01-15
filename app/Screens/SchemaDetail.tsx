@@ -10,27 +10,14 @@ import {
   ActivityIndicator,
 } from "react-native";
 import CustomBackButton from "@/components/ReusableComponent/CustomBackButton";
-import FabButton from "@/components/ReusableComponent/CustomFABButton";
-import { SafeAreaView } from "react-native-safe-area-context";
 import HorizontalTabBar from "@/components/ReusableComponent/customHorizontalBar";
-import { FONT_SIZE, InterFont } from "@/assets/fonts/Constants";
+import { FONT_SIZE } from "@/assets/fonts/Constants";
 import { COLORS } from "@/assets/Constants/Colors";
-import {
-  useFonts,
-  Inter_100Thin,
-  Inter_200ExtraLight,
-  Inter_300Light,
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  Inter_800ExtraBold,
-  Inter_900Black,
-} from "@expo-google-fonts/inter";
 import { useSearchParams } from "expo-router/build/hooks";
 import RenderHTML from "react-native-render-html";
 import axios from "axios";
 import { router } from "expo-router";
+import { useFonts } from "expo-font";
 
 // Get screen dimensions
 const { width } = Dimensions.get("window");
@@ -45,17 +32,12 @@ export const options = {
 };
 
 const HomeScreen = () => {
-  let [fontsLoaded] = useFonts({
-    Inter_100Thin,
-    Inter_200ExtraLight,
-    Inter_300Light,
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-    Inter_800ExtraBold,
-    Inter_900Black,
-  });
+    const [loaded] = useFonts({
+      InterFonts: require('../../assets/fonts/Inter_18pt-Regular.ttf')
+    });
+    if (!loaded) {
+      return null
+    }
 
   const [activeTab, setActiveTab] = useState("Details");
   const [schemeData, setSchemeData] = useState(null);
@@ -210,6 +192,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   errorText: {
+    fontFamily:'InterFonts',
     color: "red",
     fontSize: normalize(16),
   },
@@ -220,13 +203,13 @@ const styles = StyleSheet.create({
     borderBottomColor: "#DDD",
   },
   headerTitle: {
-    fontFamily: "Inter_400Regular",
+    fontFamily:'InterFonts',
     fontSize: normalize(FONT_SIZE.medium),
     color: COLORS.HeadingColor,
     fontWeight: "bold",
   },
   subHeaderTitle: {
-    fontFamily: "Inter_400Regular",
+    fontFamily:'InterFonts',
     fontSize: normalize(FONT_SIZE.large),
     color: "#B48D3E",
     fontWeight: "bold",
@@ -238,7 +221,7 @@ const styles = StyleSheet.create({
     marginTop: normalize(8),
   },
   tag: {
-    fontFamily: "Inter_400Regular",
+    fontFamily:'InterFonts',
     backgroundColor: "#FEEDCA",
     color: "#B48D3E",
     fontSize: normalize(FONT_SIZE.ExtraSmall),
@@ -253,7 +236,7 @@ const styles = StyleSheet.create({
     padding: normalize(16),
   },
   description: {
-    fontFamily: "Inter_400Regular",
+    fontFamily:'InterFonts',
     fontSize: normalize(FONT_SIZE.small),
     color: COLORS.HeadingColor,
     textAlign: "justify",

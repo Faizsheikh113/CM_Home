@@ -1,4 +1,5 @@
 import { FONT_SIZE } from "@/assets/fonts/Constants";
+import { useFonts } from "expo-font";
 import React from "react";
 import {
   FlatList,
@@ -28,6 +29,12 @@ const HorizontalTabBar: React.FC<HorizontalTabBarProps> = ({
   activeTab,
   onTabPress,
 }) => {
+    const [loaded] = useFonts({
+      InterFonts: require('../../assets/fonts/Inter_18pt-Regular.ttf')
+    });
+    if (!loaded) {
+      return null
+    }
   return (
     <FlatList
       horizontal
@@ -68,6 +75,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#B89449", // Active tab background color
   },
   tabText: {
+    fontFamily:'InterFonts',
     fontSize: normalize(FONT_SIZE.small), // Font size
     color: "#B89449",
     fontWeight: "600",

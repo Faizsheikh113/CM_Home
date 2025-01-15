@@ -33,6 +33,7 @@ import { COLORS } from "@/assets/Constants/Colors";
 import { FONT_SIZE, InterFont } from "@/assets/fonts/Constants";
 import { router } from "expo-router";
 import RenderHTML from "react-native-render-html";
+import { useFonts } from "expo-font";
 
 // Get screen dimensions for responsive design
 const { width, height } = Dimensions.get("window");
@@ -44,6 +45,12 @@ const normalize = (size: number) => {
 };
 
 export default function HomeScreen() {
+    const [loaded] = useFonts({
+      InterFonts: require('../../assets/fonts/Inter_18pt-Regular.ttf')
+    });
+    if (!loaded) {
+      return null
+    }
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState("Categories");
 
@@ -237,6 +244,7 @@ const styles = StyleSheet.create({
     marginVertical: normalize(16),
   },
   errorText: {
+    fontFamily:'InterFonts',
     fontSize: normalize(FONT_SIZE.small),
     color: "red",
     textAlign: "center",
@@ -269,6 +277,7 @@ const styles = StyleSheet.create({
     height: normalize(30),
   },
   filterText: {
+    fontFamily:'InterFonts',
     fontSize: normalize(14),
     fontWeight: "600",
     color: "#B89449",
@@ -284,6 +293,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: normalize(10),
   },
   listTitle: {
+    fontFamily:'InterFonts',
     fontSize: normalize(FONT_SIZE.medium),
     fontWeight: "600",
     color: COLORS.HeadingColor,

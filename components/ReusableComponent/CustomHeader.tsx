@@ -11,21 +11,10 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { PixelRatio } from "react-native";
-import { FONT_SIZE, InterFont } from "@/assets/fonts/Constants";
-import {
-  useFonts,
-  Inter_100Thin,
-  Inter_200ExtraLight,
-  Inter_300Light,
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  Inter_800ExtraBold,
-  Inter_900Black,
-} from "@expo-google-fonts/inter";
+import { FONT_SIZE, } from "@/assets/fonts/Constants";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/assets/Constants/Colors";
+import { useFonts } from "expo-font";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -70,6 +59,12 @@ const Header: React.FC<HeaderProps> = ({
   onButtonPress,
   onProfilePress,
 }) => {
+    const [loaded] = useFonts({
+      InterFonts: require('../../assets/fonts/Inter_18pt-Regular.ttf')
+    });
+    if (!loaded) {
+      return null
+    }
   const styles = StyleSheet.create({
     container: {
       height: screenHeight * 0.12,
@@ -105,7 +100,7 @@ const Header: React.FC<HeaderProps> = ({
     },
     buttonText: {
       paddingHorizontal: 13,
-      fontFamily: "Inter_400Regular",
+      fontFamily: "InterFonts",
       color: "#FFF",
       fontWeight: "600",
       fontSize: normalize(FONT_SIZE.small),
@@ -127,17 +122,6 @@ const Header: React.FC<HeaderProps> = ({
       flexDirection: "row",
       alignItems: "center",
     },
-  });
-  let [fontsLoaded] = useFonts({
-    Inter_100Thin,
-    Inter_200ExtraLight,
-    Inter_300Light,
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-    Inter_800ExtraBold,
-    Inter_900Black,
   });
 
   return (

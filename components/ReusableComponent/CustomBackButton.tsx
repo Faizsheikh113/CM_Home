@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions, PixelRatio } from "react-native";
 import { COLORS } from "@/assets/Constants/Colors";
+import { useFonts } from "expo-font";
 
 // Get screen dimensions for responsive design
 const { width } = Dimensions.get("window");
@@ -37,6 +38,12 @@ const CustomBackButton: React.FC<HeaderProps> = ({
   onSharePress,
   onSavePress,
 }) => {
+  const [loaded] = useFonts({
+    InterFonts: require('../../assets/fonts/Inter_18pt-Regular.ttf')
+  });
+  if (!loaded) {
+    return null
+  }
   return (
     <LinearGradient
       colors={["#F9FAA9", "#FFF5E7", "#F6F6F6"]}
@@ -106,6 +113,7 @@ const styles = StyleSheet.create({
     borderRadius: normalize(8),
   },
   title: {
+    fontFamily: "InterFonts",
     fontSize: normalize(16),
     fontWeight: "500",
     color: COLORS.HeadingColor,

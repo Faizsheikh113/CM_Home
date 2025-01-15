@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
     padding: width * 0.03,
   },
   title: {
+    fontFamily: "InterFonts",
     fontSize: width * 0.045, // Dynamic font size
     fontWeight: "bold",
     color: "#000",

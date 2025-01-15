@@ -1,18 +1,8 @@
 import { FONT_SIZE, InterFont } from "@/assets/fonts/Constants";
+import { useFonts } from "expo-font";
 import React from "react";
 import { View, TextInput, StyleSheet, Image, Dimensions, PixelRatio } from "react-native";
-import {
-  useFonts,
-  Inter_100Thin,
-  Inter_200ExtraLight,
-  Inter_300Light,
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  Inter_800ExtraBold,
-  Inter_900Black,
-} from '@expo-google-fonts/inter';
+
 const { width, height } = Dimensions.get("window");
 
 // Normalize function for consistent scaling
@@ -54,6 +44,13 @@ const CustomSearchBar: React.FC<CustomSearchBarProps> = ({
   placeholder,
   onSearch,
 }) => {
+    const [loaded] = useFonts({
+      InterFonts: require('../../assets/fonts/Inter_18pt-Regular.ttf')
+    });
+    if (!loaded) {
+      return null
+    }
+  
   const styles = StyleSheet.create({
     container: {
       paddingHorizontal: getSearchBoxPadding(), // Responsive padding
@@ -78,22 +75,11 @@ const CustomSearchBar: React.FC<CustomSearchBarProps> = ({
       alignItems: "center",
     },
     input: {
-      fontFamily: 'Inter_400Regular',
+      fontFamily: 'InterFonts',
       fontWeight: "600",
       fontSize: getInputFontSize(), // Responsive font size for input
       flex: 1, // To ensure the input field takes up remaining space
     },
-  });
-  let [fontsLoaded] = useFonts({
-    Inter_100Thin,
-    Inter_200ExtraLight,
-    Inter_300Light,
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-    Inter_800ExtraBold,
-    Inter_900Black,
   });
 
   return (

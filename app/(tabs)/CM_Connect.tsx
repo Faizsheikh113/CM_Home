@@ -13,18 +13,8 @@ import CustomBackButton from "@/components/ReusableComponent/CustomBackButton";
 import FabButton from "@/components/ReusableComponent/CustomFABButton";
 import { COLORS } from "@/assets/Constants/Colors";
 import { FONT_SIZE } from "@/assets/fonts/Constants";
-import {
-  useFonts,
-  Inter_100Thin,
-  Inter_200ExtraLight,
-  Inter_300Light,
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  Inter_800ExtraBold,
-  Inter_900Black,
-} from '@expo-google-fonts/inter';
+import { useFonts } from "expo-font";
+
 
 // Get screen dimensions
 const { width, height } = Dimensions.get("window");
@@ -39,17 +29,12 @@ const normalize = (size: any) => {
 const isLargeScreen = width > 600;
 
 const HomeScreen = () => {
-  let [fontsLoaded] = useFonts({
-    Inter_100Thin,
-    Inter_200ExtraLight,
-    Inter_300Light,
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-    Inter_800ExtraBold,
-    Inter_900Black,
+  const [loaded] = useFonts({
+    InterFonts: require('../../assets/fonts/Inter_18pt-Regular.ttf')
   });
+  if (!loaded) {
+    return null
+  }
   const handleBackPress = () => {
     console.log("Back button pressed");
   };
@@ -79,14 +64,14 @@ const HomeScreen = () => {
       padding: normalize(16), // Dynamic padding
     },
     topNewsHeader: {
-      fontFamily: 'Inter_400Regular',
+      fontFamily: 'InterFonts',
       color: "#F9453D",
       fontSize: normalize(FONT_SIZE.medium), // Adjust font size
       fontWeight: "bold",
       marginBottom: normalize(5),
     },
     postedTime: {
-      fontFamily: 'Inter_400Regular',
+      fontFamily: 'InterFonts',
       fontSize: normalize(FONT_SIZE.ExtraSmall),
       color: COLORS.GrayColor,
     },
@@ -97,19 +82,19 @@ const HomeScreen = () => {
       marginBottom: normalize(16),
     },
     mainTitle: {
-      fontFamily: 'Inter_400Regular',
+      fontFamily: 'InterFonts',
       fontSize: normalize(FONT_SIZE.large),
       fontWeight: "bold",
       color: COLORS.HeadingColor,
       marginBottom: normalize(16),
     },
     mainContent: {
-      fontFamily: 'Inter_400Regular',
-      fontWeight:'400',
+      fontFamily: 'InterFonts',
+      fontWeight: '400',
       fontSize: normalize(FONT_SIZE.small),
       color: COLORS.GrayColor,
       lineHeight: normalize(20),
-      textAlign:'justify'
+      textAlign: 'justify'
     },
     playerDetailsImage: {
       flex: 1,

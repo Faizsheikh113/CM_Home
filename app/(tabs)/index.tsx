@@ -17,20 +17,10 @@ import QuickServices from "@/components/ReusableComponent/CustomQuickService";
 import { useQuizOfTheDay } from "@/components/CustomHook/QuizOfTheDayHook";
 import { useManKiBaat } from "@/components/CustomHook/ManKiBatHook";
 import { SectionHeader } from "@/components/ReusableComponent/CustomReusableSchema";
-import { FONT_SIZE, InterFont } from "@/assets/fonts/Constants";
+import { FONT_SIZE } from "@/assets/fonts/Constants";
 import { COLORS } from "@/assets/Constants/Colors";
-import {
-  useFonts,
-  Inter_100Thin,
-  Inter_200ExtraLight,
-  Inter_300Light,
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  Inter_800ExtraBold,
-  Inter_900Black,
-} from '@expo-google-fonts/inter';
+import { useFonts } from "expo-font";
+
 
 // Get screen dimensions for responsive design
 const { width, height } = Dimensions.get("window");
@@ -59,17 +49,12 @@ const getTextMarginTop = () => {
 };
 
 export default function HomeScreen() {
-  let [fontsLoaded] = useFonts({
-    Inter_100Thin,
-    Inter_200ExtraLight,
-    Inter_300Light,
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-    Inter_800ExtraBold,
-    Inter_900Black,
+  const [loaded] = useFonts({
+    InterFonts: require('../../assets/fonts/Inter_18pt-Regular.ttf')
   });
+  if (!loaded) {
+    return null
+  }
   const quizOfTheDay = useQuizOfTheDay();
   const manKiBaatVideos = useManKiBaat();
 
@@ -96,12 +81,12 @@ export default function HomeScreen() {
       paddingHorizontal: normalize(20), // Adjust padding horizontally
     },
     locationText: {
-      fontFamily: 'Inter_400Regular',
+      fontFamily: 'InterFonts',
       fontSize: normalize(FONT_SIZE.small), // Responsive font size
       color: "#BAC4D2",
     },
     changeText: {
-      fontFamily: 'Inter_400Regular',
+      fontFamily: 'InterFonts',
       fontSize: normalize(FONT_SIZE.small), // Responsive font size
       color: "#B48D3E",
       fontWeight: "bold",

@@ -1,3 +1,4 @@
+import { useFonts } from "expo-font";
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, PixelRatio } from "react-native";
 
@@ -45,6 +46,12 @@ const ManKiBaatVideoSection: React.FC<ManKiBaatVideoSectionProps> = ({
   thumbnail,
   onPressViewAll,
 }) => {
+    const [loaded] = useFonts({
+      InterFonts: require('../../assets/fonts/Inter_18pt-Regular.ttf')
+    });
+    if (!loaded) {
+      return null
+    }
   return (
     <View style={[styles.container, { padding: getContainerPadding() }]}>
       <Text style={[styles.header, { fontSize: getHeaderFontSize() }]}>Check out Mann ki Baat</Text>
@@ -66,6 +73,7 @@ const styles = StyleSheet.create({
     alignSelf: "center", // Center the container horizontally
   },
   header: {
+    fontFamily:'InterFonts',
     fontWeight: "bold",
     color: "#333",
     marginBottom: normalize(12), // Dynamic margin for spacing
@@ -77,6 +85,7 @@ const styles = StyleSheet.create({
     marginBottom: normalize(12), // Dynamic margin below the image
   },
   buttonText: {
+    fontFamily:'InterFonts',
     color: "#007BFF",
     fontWeight: "bold",
     fontSize: normalize(14), // Dynamic font size for the button text

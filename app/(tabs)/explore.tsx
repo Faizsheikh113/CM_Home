@@ -10,27 +10,10 @@ import {
   ActivityIndicator,
   PixelRatio,
 } from "react-native";
-import CustomBackButton from "@/components/ReusableComponent/CustomBackButton";
-import FabButton from "@/components/ReusableComponent/CustomFABButton";
-import { SafeAreaView } from "react-native-safe-area-context";
-import HorizontalTabBar from "@/components/ReusableComponent/customHorizontalBar";
 import { FONT_SIZE } from "@/assets/fonts/Constants";
-import {
-  useFonts,
-  Inter_100Thin,
-  Inter_200ExtraLight,
-  Inter_300Light,
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  Inter_800ExtraBold,
-  Inter_900Black,
-} from "@expo-google-fonts/inter";
-import { useSearchParams } from "expo-router/build/hooks";
-import axios from "axios";
 import Header from "@/components/ReusableComponent/CustomHeader";
 import CustomSearchBar from "@/components/ReusableComponent/CustomSearchBar";
+import { useFonts } from "expo-font";
 
 // Get screen dimensions
 const { width } = Dimensions.get("window");
@@ -59,18 +42,12 @@ const getTextMarginTop = () => {
 };
 
 const HomeScreen = () => {
-  let [fontsLoaded] = useFonts({
-    Inter_100Thin,
-    Inter_200ExtraLight,
-    Inter_300Light,
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-    Inter_800ExtraBold,
-    Inter_900Black,
+  const [loaded] = useFonts({
+    InterFonts: require('../../assets/fonts/Inter_18pt-Regular.ttf')
   });
-
+  if (!loaded) {
+    return null
+  }
   // const [activeTab, setActiveTab] = useState("Details");
   // const [schemeData, setSchemeData] = useState(null);
   // const [loading, setLoading] = useState(true);
@@ -180,12 +157,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: normalize(20), // Adjust padding horizontally
   },
   locationText: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "InterFonts",
     fontSize: normalize(FONT_SIZE.small), // Responsive font size
     color: "#BAC4D2",
   },
   changeText: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "InterFonts",
     fontSize: normalize(FONT_SIZE.small), // Responsive font size
     color: "#B48D3E",
     fontWeight: "bold",

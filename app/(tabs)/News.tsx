@@ -22,6 +22,7 @@ import LocalImage from "../../assets/images/ScheamPageImage.png";
 import { useNavigation } from "expo-router";
 import { COLORS } from "@/assets/Constants/Colors";
 import { FONT_SIZE } from "@/assets/fonts/Constants";
+import { useFonts } from "expo-font";
 
 // Get screen dimensions for responsive design
 const { width, height } = Dimensions.get("window");
@@ -76,6 +77,12 @@ const HomeScreen = () => {
         "Union Health Minister JP Nadda said- India is now a country o...",
     },
   ];
+    const [loaded] = useFonts({
+      InterFonts: require('../../assets/fonts/Inter_18pt-Regular.ttf')
+    });
+    if (!loaded) {
+      return null
+    }
 
   const handleFabPress = () => {
     console.log("FAB clicked!");
@@ -192,11 +199,13 @@ const styles = StyleSheet.create({
   },
   textWrapper: {},
   title: {
+    fontFamily:'InterFonts',
     fontSize: normalize(FONT_SIZE.small),
     fontWeight: "700",
     color: "#F9453D",
   },
   subtitle: {
+    fontFamily:'InterFonts',
     fontSize: normalize(FONT_SIZE.medium),
     fontWeight: "600",
     color: COLORS.HeadingColor,
@@ -221,11 +230,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   listTitle: {
+    fontFamily:'InterFonts',
     fontSize: normalize(FONT_SIZE.medium),
     fontWeight: "600",
     color: COLORS.HeadingColor,
   },
   listSubtitle: {
+    fontFamily:'InterFonts',
     fontSize: normalize(FONT_SIZE.medium),
     color: COLORS.HeadingColor,
     marginTop: normalize(4),

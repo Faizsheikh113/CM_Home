@@ -1,5 +1,6 @@
 import { COLORS } from "@/assets/Constants/Colors";
-import { FONT_SIZE, InterFont } from "@/assets/fonts/Constants";
+import { FONT_SIZE } from "@/assets/fonts/Constants";
+import { useFonts } from "expo-font";
 import React from "react";
 import {
   View,
@@ -10,18 +11,6 @@ import {
   Dimensions,
   PixelRatio,
 } from "react-native";
-import {
-  useFonts,
-  Inter_100Thin,
-  Inter_200ExtraLight,
-  Inter_300Light,
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  Inter_800ExtraBold,
-  Inter_900Black,
-} from "@expo-google-fonts/inter";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -48,17 +37,12 @@ const QuizCard: React.FC<QuizCardProps> = ({
   thumbnail,
   onParticipate,
 }) => {
-  let [fontsLoaded] = useFonts({
-    Inter_100Thin,
-    Inter_200ExtraLight,
-    Inter_300Light,
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-    Inter_800ExtraBold,
-    Inter_900Black,
+  const [loaded] = useFonts({
+    InterFonts: require('../../assets/fonts/Inter_18pt-Regular.ttf')
   });
+  if (!loaded) {
+    return null
+  }
   return (
     <View style={styles.outercontainer}>
       <View style={styles.container}>
@@ -146,13 +130,13 @@ const styles = StyleSheet.create({
   },
   title: {
     // paddingHorizontal:normalize(10) ,// Dynamic padding for content
-    fontFamily: "Inter_400Regular",
+    fontFamily: "InterFonts",
     fontSize: normalize(FONT_SIZE.medium), // Dynamic font size
     fontWeight: "bold",
     color: COLORS.HeadingColor,
   },
   details: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "InterFonts",
     fontSize: normalize(FONT_SIZE.small), // Dynamic font size for details
     color: "#3DABF9",
     fontWeight: "600",
@@ -164,7 +148,7 @@ const styles = StyleSheet.create({
     padding: normalize(2),
   },
   detailsTime: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "InterFonts",
     fontSize: normalize(FONT_SIZE.small), // Dynamic font size for details
     color: COLORS.GrayColor,
     fontWeight: "600",
@@ -178,7 +162,7 @@ const styles = StyleSheet.create({
     borderColor: "#B89449",
   },
   buttonText: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "InterFonts",
     color: "#B89449",
     fontWeight: "bold",
     fontSize: normalize(FONT_SIZE.small), // Dynamic font size for button text

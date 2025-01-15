@@ -5,5 +5,4 @@ export const FONT_SIZE = {
   large: 19.2,
 };
 
-export const InterFont = "Inter";
 export const MuktaFont = "Mukta";
