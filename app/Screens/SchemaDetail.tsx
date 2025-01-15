@@ -28,6 +28,7 @@ import {
   Inter_900Black,
 } from "@expo-google-fonts/inter";
 import { useSearchParams } from "expo-router/build/hooks";
+import RenderHTML from "react-native-render-html";
 import axios from "axios";
 import { router } from "expo-router";
 
@@ -40,8 +41,8 @@ const normalize = (size: number) => {
   return Math.round(size * scale);
 };
 export const options = {
-    headerShown: false, 
-  };
+  headerShown: false,
+};
 
 const HomeScreen = () => {
   let [fontsLoaded] = useFonts({
@@ -142,9 +143,14 @@ const HomeScreen = () => {
 
         {/* Content Section */}
         <View style={styles.contentContainer}>
-          <Text style={styles.description}>
-            {schemeData?.schemeDetails || "No details available."}
-          </Text>
+          {schemeData?.schemeDetails ? (
+            <RenderHTML
+              contentWidth={width}
+              source={{ html: schemeData.schemeDetails }}
+            />
+          ) : (
+            <Text style={styles.description}>No details available.</Text>
+          )}
 
           <View
             style={{
@@ -161,11 +167,16 @@ const HomeScreen = () => {
             />
 
             {/* Content based on active tab */}
-            <Text style={styles.description}>
-              {activeTab === "Details"
-                ? schemeData?.schemeDetails
-                : `Content for ${activeTab}`}
-            </Text>
+            {activeTab === "Details" && schemeData?.schemeDetails ? (
+              <RenderHTML
+                contentWidth={width}
+                source={{ html: schemeData.schemeDetails }}
+              />
+            ) : (
+              <Text style={styles.description}>
+                Content for {activeTab}
+              </Text>
+            )}
           </View>
 
           {/* Eligibility Button */}

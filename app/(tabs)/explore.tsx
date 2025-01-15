@@ -14,8 +14,7 @@ import CustomBackButton from "@/components/ReusableComponent/CustomBackButton";
 import FabButton from "@/components/ReusableComponent/CustomFABButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HorizontalTabBar from "@/components/ReusableComponent/customHorizontalBar";
-import { FONT_SIZE, InterFont } from "@/assets/fonts/Constants";
-import { COLORS } from "@/assets/Constants/Colors";
+import { FONT_SIZE } from "@/assets/fonts/Constants";
 import {
   useFonts,
   Inter_100Thin,

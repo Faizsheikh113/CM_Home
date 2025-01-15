@@ -32,7 +32,7 @@ import HorizontalTabBar from "@/components/ReusableComponent/customHorizontalBar
 import { COLORS } from "@/assets/Constants/Colors";
 import { FONT_SIZE, InterFont } from "@/assets/fonts/Constants";
 import { router } from "expo-router";
-// import { normalize } from "../../assets/Constants/Responsive";
+import RenderHTML from "react-native-render-html";
 
 // Get screen dimensions for responsive design
 const { width, height } = Dimensions.get("window");
@@ -87,7 +87,14 @@ export default function HomeScreen() {
         <Image source={imageUri} style={styles.listIcon} />
         <View style={styles.listTextContainer}>
           <Text style={styles.listTitle}>{title}</Text>
-          <Text style={styles.listSubtitle}>{subtitle}</Text>
+          <RenderHTML
+            contentWidth={width}
+            source={{ html: subtitle }}
+            baseStyle={{
+              fontSize: normalize(FONT_SIZE.small),
+              color: COLORS.LightGrayColor,
+            }}
+          />
         </View>
       </TouchableOpacity>
     );
@@ -168,7 +175,6 @@ export default function HomeScreen() {
               subtitle={item.schemeDetails}
               onPress={() => {
                 console.log(`${item.schemeTitle}${item.id} pressed`);
-                // router.push(`/(tabs)/explore?id=${item?.id}` as any);
                 router.push(`/Screens/SchemaDetail?id=${item?.id}` as any);
               }}
             />
@@ -282,11 +288,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: COLORS.HeadingColor,
   },
-  listSubtitle: {
-    fontSize: normalize(FONT_SIZE.small),
-    color: COLORS.LightGrayColor,
-    marginTop: normalize(8),
-  },
   cardStyle: {
     marginVertical: normalize(24),
   },
@@ -305,9 +306,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.WhiteColor,
   },
   image: {
-    // flex:1,
     width: "100%",
     height: height * 0.15,
-    resizeMode:'stretch'
+    resizeMode: "stretch",
   },
 });

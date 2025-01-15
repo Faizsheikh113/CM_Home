@@ -12,8 +12,7 @@ import {
 import CustomBackButton from "@/components/ReusableComponent/CustomBackButton";
 import FabButton from "@/components/ReusableComponent/CustomFABButton";
 import { COLORS } from "@/assets/Constants/Colors";
-import { FONT_SIZE, InterFont, MuktaFont } from "@/assets/fonts/Constants";
-import { Stack } from "expo-router";
+import { FONT_SIZE } from "@/assets/fonts/Constants";
 import {
   useFonts,
   Inter_100Thin,
